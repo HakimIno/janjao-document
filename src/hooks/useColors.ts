@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { colors, ColorSystem } from '../assets/colors';
+import { colors } from '../assets/colors';
+import { ColorSystem } from '../lib/colorUtils';
 
 interface ColorUtils {
     getColor: (name: string, shade: number, mode?: 'light' | 'dark') => string;
@@ -18,30 +19,50 @@ export const useColors = (): ColorUtils => {
         getColor: (name: string, shade: number, mode: 'light' | 'dark' = 'light'): string => {
             const colorSet = colors[name]?.[mode];
             if (!colorSet) throw new Error(`Color ${name} not found`);
-
-            // Map shade (0-1000) to array index
-            const index = Math.floor(shade / 100);
-            return colorSet[index] || colorSet[5]; // Default to 500 if shade not found
+            return colorSet[Math.floor(shade / 100)] || '';
         },
 
         // Get gradient by index
         getGradient: (index: number, mode: 'light' | 'dark' = 'light'): string => {
-            return colors.gradient[mode][index] || colors.gradient[mode][0];
+            const gradients = {
+                light: [
+                    'linear-gradient(to right, #0EA5E9, #22D3EE)',
+                    'linear-gradient(to right, #8B5CF6, #D946EF)',
+                    'linear-gradient(to right, #F59E0B, #F97316)',
+                    'linear-gradient(to right, #10B981, #34D399)',
+                ],
+                dark: [
+                    'linear-gradient(to right, #0284C7, #0891B2)',
+                    'linear-gradient(to right, #7C3AED, #C026D3)',
+                    'linear-gradient(to right, #D97706, #EA580C)',
+                    'linear-gradient(to right, #059669, #10B981)',
+                ]
+            };
+            return gradients[mode][index % gradients[mode].length] || '';
         },
 
         // Get alpha color
         getAlpha: (name: string, level: number, mode: 'light' | 'dark' = 'light'): string => {
-            const alphaSet = colors[name]?.alpha[mode];
+            const alphaSet = colors[name]?.alpha?.[mode];
             if (!alphaSet) throw new Error(`Alpha color ${name} not found`);
-
-            // Map level (0-100) to array index
-            const index = Math.floor(level / 10);
-            return alphaSet[index] || alphaSet[5];
+            return alphaSet[Math.floor(level / 10)] || '';
         },
 
-        // Get special effect
+        // Get effect color
         getEffect: (type: string, mode: 'light' | 'dark' = 'light'): string => {
-            return colors.effects[mode][type] || '';
+            const effects: Record<string, Record<string, string>> = {
+                light: {
+                    glow: 'rgba(14, 165, 233, 0.5)',
+                    shadow: 'rgba(0, 0, 0, 0.1)',
+                    highlight: 'rgba(255, 255, 255, 0.8)',
+                },
+                dark: {
+                    glow: 'rgba(56, 189, 248, 0.5)',
+                    shadow: 'rgba(0, 0, 0, 0.3)',
+                    highlight: 'rgba(255, 255, 255, 0.1)',
+                }
+            };
+            return effects[mode][type] || '';
         },
 
         // Get entire color palette

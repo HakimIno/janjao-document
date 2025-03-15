@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Element, Events, Link, scrollSpy } from 'react-scroll';
-import { Cover } from '../components/ui/cover';
+import { Element, Events, scrollSpy } from 'react-scroll';
 import OnThisPage from '../components/onThisPage';
 import { SolarCheckCircleBoldDuotone, SolarCopyBoldDuotone } from '../shared/icons/Solar';
 
@@ -872,7 +871,7 @@ const Colors = () => {
         setCopied(false)
     }, [isClick])
 
-    const ColorGrid = ({ colors, type }: { colors: any[], type: 'light' | 'dark' }) => {
+    const ColorGrid = ({ type }: { type: 'light' | 'dark' }) => {
         return (
             <div className="w-full overflow-x-auto">
                 <div className="min-w-full">
@@ -957,12 +956,12 @@ const Colors = () => {
         {
             id: 'light-colors',
             title: 'Light',
-            content: () => <ColorGrid colors={colorNames} type="light" />
+            content: () => <ColorGrid type="light" />
         },
         {
             id: 'dark-colors',
             title: 'Dark',
-            content: () => <ColorGrid colors={colorNames} type="dark" />
+            content: () => <ColorGrid type="dark" />
         }
     ];
 

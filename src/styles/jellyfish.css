@@ -1,0 +1,219 @@
+/* Jellyfish Animation Styles */
+.jellyfish-container {
+  position: relative;
+  background: linear-gradient(to bottom, #1e40af, #1e3a8a);
+  overflow: hidden;
+}
+
+/* Main Jellyfish */
+.jellyfish {
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  width: 40px;
+  height: 50px;
+  animation: float 8s ease-in-out infinite;
+  z-index: 2;
+}
+
+.jellyfish-small {
+  width: 25px;
+  height: 30px;
+  top: 30%;
+}
+
+.jellyfish-body {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  background: radial-gradient(ellipse at center, rgba(216, 180, 254, 0.9) 0%, rgba(176, 130, 255, 0.6) 70%);
+  border-radius: 50% 50% 35% 35%;
+  box-shadow: 0 0 15px rgba(216, 180, 254, 0.5);
+  animation: pulse 3s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+/* Cute eyes for the jellyfish */
+.jellyfish-body::before,
+.jellyfish-body::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  top: 30%;
+  animation: blink 4s ease-in-out infinite;
+}
+
+.jellyfish-body::before {
+  left: 25%;
+}
+
+.jellyfish-body::after {
+  right: 25%;
+}
+
+/* Cute smile */
+.jellyfish-body .smile {
+  position: absolute;
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.jellyfish-small .jellyfish-body {
+  background: radial-gradient(ellipse at center, rgba(147, 197, 253, 0.9) 0%, rgba(96, 165, 250, 0.6) 70%);
+  box-shadow: 0 0 10px rgba(147, 197, 253, 0.5);
+}
+
+.jellyfish-small .jellyfish-body::before,
+.jellyfish-small .jellyfish-body::after {
+  width: 3px;
+  height: 3px;
+}
+
+.jellyfish-tentacles {
+  position: absolute;
+  top: 60%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.tentacle {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, rgba(216, 180, 254, 0.8), rgba(216, 180, 254, 0.1));
+  border-radius: 50%;
+  animation: tentacle-wave 4s ease-in-out infinite;
+}
+
+.jellyfish-small .tentacle {
+  width: 1px;
+  height: 15px;
+  background: linear-gradient(to bottom, rgba(147, 197, 253, 0.8), rgba(147, 197, 253, 0.1));
+}
+
+.tentacle-1 { left: 20%; animation-delay: 0s; }
+.tentacle-2 { left: 35%; animation-delay: 0.5s; }
+.tentacle-3 { left: 50%; animation-delay: 1s; }
+.tentacle-4 { left: 65%; animation-delay: 0.7s; }
+.tentacle-5 { left: 80%; animation-delay: 0.2s; }
+
+/* Bubbles */
+.bubble {
+  position: absolute;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 70%);
+  border-radius: 50%;
+  animation: bubble-rise 8s ease-in-out infinite;
+  z-index: 1;
+}
+
+.bubble-1 {
+  width: 8px;
+  height: 8px;
+  left: 25%;
+  bottom: -10px;
+  animation-delay: 0s;
+}
+
+.bubble-2 {
+  width: 5px;
+  height: 5px;
+  left: 60%;
+  bottom: -10px;
+  animation-delay: 3s;
+}
+
+.bubble-3 {
+  width: 6px;
+  height: 6px;
+  left: 75%;
+  bottom: -10px;
+  animation-delay: 5s;
+}
+
+/* Light rays in background */
+.light-ray {
+  position: absolute;
+  top: -50%;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  transform: rotate(20deg);
+  animation: light-shimmer 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+.light-ray-1 { left: 10%; animation-delay: 0s; }
+.light-ray-2 { left: 30%; animation-delay: 2s; }
+.light-ray-3 { left: 70%; animation-delay: 4s; }
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(-2deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes tentacle-wave {
+  0%, 100% {
+    transform: scaleY(1) translateY(0);
+  }
+  50% {
+    transform: scaleY(1.2) translateY(3px);
+  }
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-120px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes blink {
+  0%, 45%, 55%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.1);
+    opacity: 0.1;
+  }
+}
+
+@keyframes light-shimmer {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+} 

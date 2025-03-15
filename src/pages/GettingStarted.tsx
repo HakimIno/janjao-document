@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, Element, Events, scrollSpy } from 'react-scroll';
 import { Badge } from '@radix-ui/themes';
+import '../styles/jellyfish.css';
 
 const GettingStarted = () => {
     const sections = [
@@ -169,7 +170,7 @@ const deepSeaTheme = {
             
             {/* Main content */}
             <div className="w-full">
-                {sections.map((section, index) => (
+                {sections.map((section) => (
                     <Element
                         name={section.id}
                         key={section.id}
@@ -322,6 +323,44 @@ const deepSeaTheme = {
             <div className="hidden xl:block fixed top-24 right-14 w-64 z-10">
                 <div className="bg-blue-950/70 p-6 rounded-xl border border-cyan-500/20 shadow-md">
                     <h3 className="text-lg font-sf-semibold text-cyan-200 mb-4">On This Page</h3>
+                    
+                    {/* Jellyfish Animation */}
+                    <div className="jellyfish-container relative h-40 mb-6 overflow-hidden rounded-lg bg-blue-950/50">
+                        <div className="jellyfish">
+                            <div className="jellyfish-body">
+                                <div className="smile"></div>
+                            </div>
+                            <div className="jellyfish-tentacles">
+                                <div className="tentacle tentacle-1"></div>
+                                <div className="tentacle tentacle-2"></div>
+                                <div className="tentacle tentacle-3"></div>
+                                <div className="tentacle tentacle-4"></div>
+                                <div className="tentacle tentacle-5"></div>
+                            </div>
+                        </div>
+                        
+                        <div className="jellyfish jellyfish-small" style={{ left: '65%', animationDelay: '2s' }}>
+                            <div className="jellyfish-body">
+                                <div className="smile"></div>
+                            </div>
+                            <div className="jellyfish-tentacles">
+                                <div className="tentacle tentacle-1"></div>
+                                <div className="tentacle tentacle-2"></div>
+                                <div className="tentacle tentacle-3"></div>
+                            </div>
+                        </div>
+                        
+                        {/* Light rays */}
+                        <div className="light-ray light-ray-1"></div>
+                        <div className="light-ray light-ray-2"></div>
+                        <div className="light-ray light-ray-3"></div>
+                        
+                        {/* Bubbles */}
+                        <div className="bubble bubble-1"></div>
+                        <div className="bubble bubble-2"></div>
+                        <div className="bubble bubble-3"></div>
+                    </div>
+                    
                     <ul className="space-y-3">
                         {sections.map((section) => (
                             <li key={section.id}>

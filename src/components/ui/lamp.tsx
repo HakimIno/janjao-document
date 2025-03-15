@@ -12,6 +12,7 @@ const LampContainer = ({
         <div
             className={cn(
                 "relative z-0 flex min-h-[85vh] md:min-h-screen justify-center flex-col overflow-hidden w-full rounded-md",
+                className
             )}
         >
             {/* Lamp Effect Container */}

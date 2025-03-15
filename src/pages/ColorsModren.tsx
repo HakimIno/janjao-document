@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Element, Events, scrollSpy } from 'react-scroll';
 import { SolarCheckCircleBoldDuotone, SolarCopyBoldDuotone, SolarDocumentsBoldDuotone } from '../shared/icons/Solar';
 import OnThisPage from '../components/onThisPage';

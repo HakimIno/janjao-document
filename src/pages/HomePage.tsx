@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { SparklesCore } from '../components/ui/sparkles';
-import { motion, HTMLMotionProps } from 'framer-motion';
-import { FlipWords } from '../components/ui/flip-words';
+import { motion } from 'framer-motion';
 import { UnderwaterScene } from '../components/underwater/UnderwaterScene';
 import '../styles/underwater-animations.css';
 import HeroSection from '../components/underwater/HeroSection';
@@ -20,8 +19,6 @@ interface Stat {
     icon: React.ReactNode;
 }
 
-
-
 interface FeatureCardProps {
     feature: Feature;
     index: number;
@@ -32,19 +29,12 @@ interface StatItemProps {
     index: number;
 }
 
-// Motion component type definitions
-type MotionDivProps = HTMLMotionProps<"div">;
-type MotionHeadingProps = HTMLMotionProps<"h2">;
-type MotionParagraphProps = HTMLMotionProps<"p">;
-
 const STATS: Stat[] = [
     { label: "Deployments", value: "100K+", icon: "🌊" },
     { label: "Components", value: "50+", icon: "🐋" },
     { label: "GitHub Stars", value: "2.5K", icon: "⭐" },
     { label: "Contributors", value: "100+", icon: "🧜‍♂️" }
 ];
-
-
 
 // Updated FeatureCard component with underwater-themed glowing effect
 const FeatureCard: React.FC<FeatureCardProps> = ({ feature, index }) => (

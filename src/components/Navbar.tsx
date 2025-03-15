@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, Search, Github, Moon, Sun, Globe, X, SidebarClose } from 'lucide-react';
+import { Menu, Search, Github, Moon, Sun, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import JanJaoLogo from './JanJaoLogo';
@@ -12,7 +12,7 @@ interface NavbarProps {
     isMenuOpen?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, sections, isMenuOpen = true }) => {
+const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, isMenuOpen = true }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);

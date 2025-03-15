@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, ComponentType, FC } from 'react';
+import { Suspense, lazy, ComponentType, FC } from 'react';
 
 type LazyRouteProps = {
     importComponent: () => Promise<{ default: ComponentType<any> }>;

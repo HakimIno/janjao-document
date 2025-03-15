@@ -58,7 +58,7 @@ export const UnderwaterScene: React.FC = () => {
       />
 
       {/* ปลาขนาดกลาง */}
-      {Object.entries(fishColors).map(([key, color], i) => (
+      {Object.entries(fishColors).map(([, color], i) => (
         <Fish 
           key={`medium-fish-${i}`}
           type={FishType.MEDIUM_FISH} 
@@ -72,7 +72,7 @@ export const UnderwaterScene: React.FC = () => {
       ))}
 
       {/* ปลาขนาดเล็ก */}
-      {Object.entries(smallFishColors).map(([key, color], i) => (
+      {Object.entries(smallFishColors).map(([, color], i) => (
         <Fish 
           key={`small-fish-${i}`}
           type={FishType.SMALL_FISH} 

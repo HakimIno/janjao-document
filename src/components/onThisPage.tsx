@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Cover } from './ui/cover'
 import { Link } from 'react-scroll'
-import { SparklesCore } from './ui/sparkles'
 
 interface Props {
     sections: any

@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
@@ -8,12 +9,12 @@ export function HoverBorderGradient({
     children,
     containerClassName,
     className,
-    as: Tag = "button", // Ensure 'Tag' is correctly typed
+    as: Component = "button",
     duration = 1,
     clockwise = true,
     ...props
 }: React.PropsWithChildren<{
-    as?: React.ElementType; // Correctly type the 'as' prop
+    as?: React.ElementType;
     containerClassName?: string;
     className?: string;
     duration?: number;
@@ -50,8 +51,10 @@ export function HoverBorderGradient({
         }
     }, [hovered, duration, clockwise]);
 
+    const Comp = Component as React.ComponentType<any>;
+    
     return (
-        <Tag
+        <Comp
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             className={cn(
@@ -61,6 +64,7 @@ export function HoverBorderGradient({
             {...props}
         >
             <div
+                key="content"
                 className={cn(
                     "w-auto text-white z-10 bg-black px-4 py-2 rounded-[inherit]",
                     className
@@ -69,6 +73,7 @@ export function HoverBorderGradient({
                 {children}
             </div>
             <motion.div
+                key="motion"
                 className={cn(
                     "flex-none inset-0 overflow-hidden absolute z-0 rounded-[inherit]"
                 )}
@@ -85,7 +90,10 @@ export function HoverBorderGradient({
                 }}
                 transition={{ ease: "linear", duration }}
             />
-            <div className="bg-black absolute z-1 flex-none inset-[2px] rounded-[100px]" />
-        </Tag>
+            <div
+                key="bg"
+                className="bg-black absolute z-1 flex-none inset-[2px] rounded-[100px]"
+            />
+        </Comp>
     );
 }

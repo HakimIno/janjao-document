@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, Element } from 'react-scroll'
-import OnThisPage from '../../components/onThisPage'
 import { Box, Tabs, } from '@radix-ui/themes'
 import CodeBlockWithCopyButton from '../../components/CodeBlockWithCopyButton';
 

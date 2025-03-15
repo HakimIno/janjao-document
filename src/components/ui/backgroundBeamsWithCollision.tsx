@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, forwardRef, RefObject } from "react";
 import { cn } from "../../lib/utils";
 
 export const BackgroundBeamsWithCollision = ({
@@ -96,11 +96,11 @@ export const BackgroundBeamsWithCollision = ({
     );
 };
 
-const CollisionMechanism = React.forwardRef<
+const CollisionMechanism = forwardRef<
     HTMLDivElement,
     {
-        containerRef: React.RefObject<HTMLDivElement>;
-        parentRef: React.RefObject<HTMLDivElement>;
+        containerRef: RefObject<HTMLDivElement>;
+        parentRef: RefObject<HTMLDivElement>;
         beamOptions?: {
             initialX?: number;
             translateX?: number;
@@ -114,7 +114,7 @@ const CollisionMechanism = React.forwardRef<
         };
     }
 >(({ parentRef, containerRef, beamOptions = {} }, ref) => {
-    const beamRef = useRef<HTMLDivElement>(null);
+    const beamRef = useRef<HTMLDivElement | null>(null);
     const [collision, setCollision] = useState<{
         detected: boolean;
         coordinates: { x: number; y: number } | null;
@@ -171,6 +171,16 @@ const CollisionMechanism = React.forwardRef<
             }, 2000);
         }
     }, [collision]);
+
+    useEffect(() => {
+        if (ref) {
+            if (typeof ref === 'function') {
+                ref(beamRef.current);
+            } else {
+                ref.current = beamRef.current;
+            }
+        }
+    }, [ref]);
 
     return (
         <>
