@@ -50,16 +50,14 @@ function AppRouter() {
 
 const Layout = memo(({ isSidebarOpen, setIsSidebarOpen }: { isSidebarOpen: boolean, setIsSidebarOpen: (isSidebarOpen: boolean) => void }) => {
     const workerRef = useRef<Worker | null>(null);
-    const [layoutData, setLayoutData] = useState<any>(null);
 
     useEffect(() => {
         workerRef.current = new Worker(new URL('../workers/performanceWorker.ts', import.meta.url));
 
         workerRef.current.onmessage = (e) => {
-            const { type, data } = e.data;
+            const { type } = e.data;
             switch (type) {
                 case 'LAYOUT_RESULT':
-                    setLayoutData(data);
                     break;
                 case 'DATA_RESULT':
                     break;

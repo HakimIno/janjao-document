@@ -17,17 +17,13 @@ type CellProps = {
     colorName?: string;
     type: 'light' | 'dark';
     selected: string;
-    setSelected: (color: string) => void;
     handleCopy: (color: string) => void;
-    copied: boolean;
 };
 
 type ColorGridProps = {
     type: 'light' | 'dark';
     selected: string;
-    setSelected: (color: string) => void;
     handleCopy: (color: string) => void;
-    copied: boolean;
 };
 
 type ColorState = {
@@ -80,7 +76,7 @@ const Tab = memo(({ active, onClick, children }: TabProps) => (
 ));
 
 // Cell component
-const Cell = ({ columnIndex, rowIndex, style, colorName, type, selected, setSelected, handleCopy, copied }: CellProps) => {
+const Cell = ({ columnIndex, rowIndex, style, colorName, type, selected, handleCopy }: CellProps) => {
     if (rowIndex === 0) {
         if (columnIndex === 0) return <div style={style} className="h-12 bg-transparent" />;
         return (
@@ -116,7 +112,7 @@ const Cell = ({ columnIndex, rowIndex, style, colorName, type, selected, setSele
 };
 
 // Memoized ColorGrid component
-const ColorGrid = memo(({ type, selected, setSelected, handleCopy, copied }: ColorGridProps) => {
+const ColorGrid = memo(({ type, selected, handleCopy }: ColorGridProps) => {
     const colorNames = Object.keys(colrs);
     const COLUMN_COUNT = 13;
     const ROW_COUNT = colorNames.length + 1;
@@ -217,13 +213,11 @@ const ColorGrid = memo(({ type, selected, setSelected, handleCopy, copied }: Col
                     colorName={colorName}
                     type={type}
                     selected={selected}
-                    setSelected={setSelected}
                     handleCopy={handleCopy}
-                    copied={copied}
                 />
             );
         },
-        [type, selected, setSelected, handleCopy, copied, colorNames, categories]
+        [type, selected, handleCopy, colorNames, categories]
     );
 
     return (
@@ -311,9 +305,7 @@ const Colors = () => {
                     <ColorGrid
                         type={activeTab}
                         selected={colorState.selected}
-                        setSelected={(color) => setColorState({ selected: color, copied: false })}
                         handleCopy={handleCopy}
-                        copied={colorState.copied}
                     />
                 </div>
 
