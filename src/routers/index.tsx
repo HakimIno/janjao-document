@@ -46,6 +46,8 @@ function AppRouter() {
                             <Route path="button" index element={<ButtonPage />} />
                             <Route path="modal" element={<div>Modal</div>} />
                             <Route path="accordion" element={<div>Accordion</div>} />
+                            <Route path="checkBox" element={<div>CheckBox</div>} />
+                            <Route path="input" element={<div>Input</div>} />
                         </Route>
                     </Route>
                 </Routes>
@@ -58,7 +60,7 @@ const Layout = memo(({ isSidebarOpen, setIsSidebarOpen }: { isSidebarOpen: boole
     return (
         <div className="min-h-screen bg-gradient-to-bl from-blue-900 to-blue-950 will-change-auto">
             <div className="absolute inset-0 bg-[url('/ocean-texture.png')] opacity-5 pointer-events-none"></div>
-            
+
             <div className="relative flex min-h-screen flex-col">
                 <MemoizedNavbar
                     isSidebarOpen={isSidebarOpen}

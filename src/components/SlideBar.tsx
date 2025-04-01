@@ -69,6 +69,8 @@ const sidebarItems = [
             { href: "/components/button", label: "Button" },
             { href: "/components/modal", label: "Modal" },
             { href: "/components/accordion", label: "Accordion" },
+            { href: "/components/checkBox", label: "CheckBox" },
+            { href: "/components/input", label: "Input" },
         ]
     }
 ];

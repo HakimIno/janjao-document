@@ -370,7 +370,7 @@ const deepSeaTheme = {
                                     smooth={true}
                                     offset={-100}
                                     duration={300}
-                                    className="text-blue-100/80 hover:text-cyan-300 transition-colors cursor-pointer block"
+                                    className="text-blue-100/80 hover:text-cyan-300 transition-colors cursor-pointer block font-sf-semibold text-sm"
                                     activeClass="text-cyan-300 font-sf-medium"
                                 >
                                     {section.title}
