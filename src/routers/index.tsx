@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
-import { Suspense, lazy, memo, useEffect, useRef } from 'react';
+import { Suspense, lazy, memo } from 'react';
 
 const HomePage = () => <LazyRoute importComponent={() => import('../pages/HomePage')} />;
 const GettingStartedPage = () => <LazyRoute importComponent={() => import('../pages/GettingStarted')} />;
@@ -21,87 +21,56 @@ function AppRouter() {
 
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<SimpleLayout />}>
-                    <Route index element={<HomePage />} />
-                </Route>
-
-                <Route path="/" element={
-                    <Layout
-                        isSidebarOpen={isSidebarOpen}
-                        setIsSidebarOpen={setIsSidebarOpen}
-                    />
-                }>
-                    <Route path="getting-started" element={<GettingStartedPage />} />
-                    <Route path="installation" element={<InstallationPage />} />
-                    <Route path="documentation" element={<DocumentationPage />} />
-                    <Route path="colors" element={<ColorsPage />} />
-
-                    <Route path="components">
-                        <Route path="button" index element={<ButtonPage />} />
-                        <Route path="modal" element={<div>Modal</div>} />
-                        <Route path="accordion" element={<div>Accordion</div>} />
+            <Suspense fallback={
+                <div className="min-h-screen flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-400"></div>
+                </div>
+            }>
+                <Routes>
+                    <Route path="/" element={<SimpleLayout />}>
+                        <Route index element={<HomePage />} />
                     </Route>
-                </Route>
-            </Routes>
+
+                    <Route path="/" element={
+                        <Layout
+                            isSidebarOpen={isSidebarOpen}
+                            setIsSidebarOpen={setIsSidebarOpen}
+                        />
+                    }>
+                        <Route path="getting-started" element={<GettingStartedPage />} />
+                        <Route path="installation" element={<InstallationPage />} />
+                        <Route path="documentation" element={<DocumentationPage />} />
+                        <Route path="colors" element={<ColorsPage />} />
+
+                        <Route path="components">
+                            <Route path="button" index element={<ButtonPage />} />
+                            <Route path="modal" element={<div>Modal</div>} />
+                            <Route path="accordion" element={<div>Accordion</div>} />
+                        </Route>
+                    </Route>
+                </Routes>
+            </Suspense>
         </BrowserRouter>
     );
 }
 
 const Layout = memo(({ isSidebarOpen, setIsSidebarOpen }: { isSidebarOpen: boolean, setIsSidebarOpen: (isSidebarOpen: boolean) => void }) => {
-    const workerRef = useRef<Worker | null>(null);
-
-    useEffect(() => {
-        workerRef.current = new Worker(new URL('../workers/performanceWorker.ts', import.meta.url));
-
-        workerRef.current.onmessage = (e) => {
-            const { type } = e.data;
-            switch (type) {
-                case 'LAYOUT_RESULT':
-                    break;
-                case 'DATA_RESULT':
-                    break;
-            }
-        };
-
-        return () => {
-            workerRef.current?.terminate();
-        };
-    }, []);
-
-    useEffect(() => {
-        if (workerRef.current) {
-            workerRef.current.postMessage({
-                type: 'COMPUTE_LAYOUT',
-                data: {
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                    isSidebarOpen
-                }
-            });
-        }
-    }, [isSidebarOpen]);
-
     return (
         <div className="min-h-screen bg-gradient-to-bl from-blue-900 to-blue-950 will-change-auto">
             <div className="absolute inset-0 bg-[url('/ocean-texture.png')] opacity-5 pointer-events-none"></div>
             
             <div className="relative flex min-h-screen flex-col">
-                <Suspense fallback={<div className="h-16 bg-blue-900 animate-pulse" />}>
-                    <MemoizedNavbar
-                        isSidebarOpen={isSidebarOpen}
-                        onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="flex-shrink-0"
-                    />
-                </Suspense>
+                <MemoizedNavbar
+                    isSidebarOpen={isSidebarOpen}
+                    onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="flex-shrink-0"
+                />
 
                 <div className="flex flex-1">
-                    <Suspense fallback={<div className="w-64 bg-blue-900 animate-pulse" />}>
-                        <MemoizedSidebar
-                            isOpen={isSidebarOpen}
-                            onClose={() => setIsSidebarOpen(false)}
-                        />
-                    </Suspense>
+                    <MemoizedSidebar
+                        isOpen={isSidebarOpen}
+                        onClose={() => setIsSidebarOpen(false)}
+                    />
 
                     <main className={`
                         flex-1 
@@ -117,9 +86,7 @@ const Layout = memo(({ isSidebarOpen, setIsSidebarOpen }: { isSidebarOpen: boole
                         ${isSidebarOpen ? 'lg:pl-72' : 'lg:pl-8'}
                     `}>
                         <div className="mx-auto w-full max-w-4xl xl:max-w-5xl">
-                            <Suspense fallback={<div className="h-96 bg-blue-900 animate-pulse rounded-lg" />}>
-                                <Outlet />
-                            </Suspense>
+                            <Outlet />
                         </div>
                     </main>
                 </div>

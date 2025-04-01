@@ -36,16 +36,16 @@ const SidebarAccordion: React.FC<SidebarAccordionProps> = ({ icon, label, href, 
                 type="button"
                 className="group relative w-full font-sf-semibold text-start flex items-center gap-x-3.5 p-1.5 px-2 text-sm 
                     rounded-xl overflow-hidden
-                    bg-blue-900/20 hover:bg-blue-900/40
+                    bg-blue-900/20 hover:bg-blue-900/40 active:bg-blue-900/40
                     text-cyan-100 hover:text-cyan-50
                     transition-all duration-300 ease-out
-                    focus:outline-none focus:ring-1 focus:ring-cyan-500/40
+                    focus:outline-none focus:ring-1 focus:ring-cyan-500/40 focus:bg-blue-900/40
                     shadow-sm hover:shadow-md hover:shadow-cyan-500/10"
                 onClick={() => children ? handleToggle() : handleNavigation(href)}
                 aria-expanded={isOpen}
             >
                 {/* Subtle glow effect */}
-                <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <span className={`absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-500/5 transition-opacity duration-300 ${isOpen || 'group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100'} ${isOpen ? 'opacity-100' : 'opacity-0'}`}></span>
                 
                 {/* Icon and label */}
                 <span className="relative z-10 text-cyan-300 group-hover:text-cyan-100 transition-colors duration-300">{icon}</span>
