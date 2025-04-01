@@ -49,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, 
     return (
         <>
             <nav className={`
-                fixed top-0 w-full z-50 transition-all duration-300 px-0 lg:px-20
+                fixed top-0 w-full z-50 transition-all duration-300 px-0 lg:px-10
                 border-b border-blue-800/50
                 ${isScrolled
                     ? ' backdrop-blur-xl  shadow-lg'
@@ -88,9 +88,9 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, 
                             <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                         </button>}
 
-                        <Link to="/" className="flex items-center gap-3 group">
+                        <Link to="/" className="">
                             <div className="relative">
-                                <JanJaoLogo size="lg" className="py-2" />
+                                <JanJaoLogo size="md" className="py-2" />
                             </div>
                         </Link>
                     </div>

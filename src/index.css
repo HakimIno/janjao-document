@@ -1,22 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Frijole&family=Rubik+Moonrocks&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    /* Add more light theme variables */
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    /* Add more dark theme variables */
-  }
-}
 
 /* Add theme transition */
 * {
@@ -141,7 +128,7 @@
 }
 
 .font-logo {
-  font-family: "Rubik Moonrocks", sans-serif;
+  font-family: "Bagel Fat One", system-ui;
 }
 
 @keyframes spin {
@@ -233,4 +220,35 @@
 
 .animate-wave {
   animation: wave 3s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s infinite ease-in-out;
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    width: 2rem;
+  }
+  50% {
+    opacity: 1;
+    width: 2.5rem;
+  }
+}
+.animate-glow {
+  animation: glow 2s infinite ease-in-out;
 }

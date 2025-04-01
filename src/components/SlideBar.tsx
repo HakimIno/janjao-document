@@ -85,11 +85,11 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) 
             )}
 
             <nav className={`
-                fixed top-16 bottom-0 left-0 lg:left-20 w-64 bg-blue-950/80 border border-cyan-900/50 z-50 backdrop-blur-lg
+                fixed top-16 bottom-0 left-0 lg:left-0 w-64 backdrop-blur-lg bg-blue-900/20 z-50 
                 transform transition-transform duration-300 ease-in-out
                 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}
             `}>
-                <nav className="h-full overflow-y-auto p-3">
+                <nav className="h-full overflow-y-auto p-1.5 mt-2">
                     <ul className="space-y-1.5">
                         {sidebarItems.map((item) => {
                             if (item.children) {

@@ -6,8 +6,8 @@ import { ThemeProvider } from './contexts/ThemeContext';
 export function App() {
 
   return (
-    <ThemeProvider>
-      <Theme accentColor="amber" appearance="dark" radius="small">
+    <ThemeProvider >
+      <Theme accentColor="blue" appearance="dark" radius="small">
         <Router />
       </Theme>
     </ThemeProvider>

@@ -62,7 +62,7 @@ export default {
         'sf-medium': ['SF-Pro-Medium', 'sans-serif'],
         'sf-regular': ['SF-Pro-Regular', 'sans-serif'],
         'sf-thin': ['SF-Pro-Thin', 'sans-serif'],
-        'logo': ['Rubik Moonrocks', 'sans-serif'],
+        'logo': ['Bagel Fat One', 'sans-serif'],
       }
     },
   },
