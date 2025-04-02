@@ -13,27 +13,31 @@ const HeroSection = () => {
     // Component สำหรับปุ่ม CTA หลัก
     const PrimaryButton: React.FC<PrimaryButtonProps> = ({ to, children }) => (
         <NavLink to={to}>
-            <button className="group relative h-14 w-full sm:w-48 overflow-hidden rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-400 p-[1px] transition-all duration-300 hover:shadow-[0_0_2rem_-0.5rem] hover:shadow-cyan-500">
-                <div className="relative h-full w-full rounded-full bg-blue-950 px-8 transition-all duration-300 group-hover:bg-blue-900/90">
-                    <div className="absolute inset-0">
-                        <SparklesCore
-                            background="transparent"
-                            minSize={0.5}
-                            maxSize={1}
-                            particleDensity={200}
-                            className="w-full h-full"
-                            particleColor="#22d3ee"
-                        />
+            <div className="relative">
+              
+
+                <button className="group relative h-14 w-full sm:w-48 overflow-hidden rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-400 p-[1px] transition-all duration-300 hover:shadow-[0_0_2rem_-0.5rem] hover:shadow-cyan-500">
+                    <div className="relative h-full w-full rounded-full bg-blue-950 px-8 transition-all duration-300 group-hover:bg-blue-900/90">
+                        <div className="absolute inset-0">
+                            <SparklesCore
+                                background="transparent"
+                                minSize={0.5}
+                                maxSize={1}
+                                particleDensity={200}
+                                className="w-full h-full"
+                                particleColor="#22d3ee"
+                            />
+                        </div>
+                        <div className="relative flex h-full items-center justify-center gap-2">
+                            <span className="font-sf-bold text-white">{children}</span>
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                                <path d="M13.75 6.75L19.25 12L13.75 17.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M19 12H4.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
                     </div>
-                    <div className="relative flex h-full items-center justify-center gap-2">
-                        <span className="font-sf-bold text-white">{children}</span>
-                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                            <path d="M13.75 6.75L19.25 12L13.75 17.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M19 12H4.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                    </div>
-                </div>
-            </button>
+                </button>
+            </div>
         </NavLink>
     );
 
@@ -125,7 +129,7 @@ const HeroSection = () => {
                     >
                         <NavLink to="/getting-started">
                             <PrimaryButton to="/getting-started">
-                                Components
+                                Get Started
                             </PrimaryButton>
                         </NavLink>
                         <a

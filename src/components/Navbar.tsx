@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, Search, Github, Moon, Sun, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import JanJaoLogo from './JanJaoLogo';
 
@@ -17,6 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, 
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const { theme, toggleTheme } = useTheme();
+    const location = useLocation();
 
     // Handle scroll effect
     useEffect(() => {
@@ -72,18 +73,18 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, 
                             aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}
                         >
                             {/* Bubble effect */}
-                            <span className="absolute w-1.5 h-1.5 bg-cyan-400/20 rounded-full top-1 right-1 animate-ping" 
-                                  style={{ animationDuration: '3s' }}></span>
-                            <span className="absolute w-1 h-1 bg-cyan-400/20 rounded-full bottom-1 left-1 animate-ping" 
-                                  style={{ animationDuration: '4s' }}></span>
-                            
+                            <span className="absolute w-1.5 h-1.5 bg-cyan-400/20 rounded-full top-1 right-1 animate-ping"
+                                style={{ animationDuration: '3s' }}></span>
+                            <span className="absolute w-1 h-1 bg-cyan-400/20 rounded-full bottom-1 left-1 animate-ping"
+                                style={{ animationDuration: '4s' }}></span>
+
                             {/* Icon */}
                             {!isSidebarOpen ? (
                                 <Menu className="h-5 w-5 transition-transform duration-200 group-hover:rotate-12" />
                             ) : (
                                 <X className="h-5 w-5 transition-transform duration-200 group-hover:rotate-12" />
                             )}
-                            
+
                             {/* Glow effect */}
                             <span className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                         </button>}
@@ -96,26 +97,32 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, 
                     </div>
 
                     {/* Center section - Search */}
-                    <div className="flex-1 hidden lg:flex items-center justify-center px-4">
-                        <div className="w-full max-w-xl">
-                            <div className="group flex items-center gap-2 rounded-full 
-                                bg-neutral-900/70 backdrop-blur-md py-2 px-4 
-                                ring-1 ring-neutral-800/80 
-                                transition-all duration-300 
-                                hover:ring-cyan-500/30 hover:bg-neutral-900/90
-                                focus-within:ring-teal-400/50 focus-within:bg-neutral-900/90">
-                                <Search className="h-5 w-5 text-cyan-600 group-hover:text-cyan-500 
-                                    group-focus-within:text-teal-500 transition-colors duration-300" />
-                                <input
-                                    type="text"
-                                    placeholder="Search components..."
-                                    className="w-full bg-transparent text-sm text-neutral-100 
-                                        placeholder-neutral-400 focus:outline-none 
-                                        group-hover:placeholder-neutral-300"
-                                />
+                    {location.pathname !== '/' ? (
+                        <div className="flex-1 hidden lg:flex items-center justify-center px-4">
+                            <div className="w-full max-w-xl">
+                                <div className="group flex items-center gap-2 rounded-full 
+              bg-neutral-900/70 backdrop-blur-md py-2 px-4 
+              ring-1 ring-neutral-800/80 
+              transition-all duration-300 
+              hover:ring-cyan-500/30 hover:bg-neutral-900/90
+              focus-within:ring-teal-400/50 focus-within:bg-neutral-900/90">
+                                    <Search className="h-5 w-5 text-cyan-600 group-hover:text-cyan-500 
+                group-focus-within:text-teal-500 transition-colors duration-300" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search components..."
+                                        className="w-full bg-transparent text-sm text-neutral-100 
+                  placeholder-neutral-400 focus:outline-none 
+                  group-hover:placeholder-neutral-300"
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="flex-1 hidden lg:flex items-center justify-center px-4">
+
+                        </div>
+                    )}
 
                     {/* Right section - Actions */}
                     <div className="w-72 pr-4 flex items-center justify-end gap-3">

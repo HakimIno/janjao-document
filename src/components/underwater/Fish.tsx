@@ -30,12 +30,12 @@ interface FishProps {
 }
 
 // Component สำหรับปลาและสัตว์ทะเลแต่ละประเภท
-export const Fish: React.FC<FishProps> = ({ 
-  type, 
-  position, 
-  color, 
-  size, 
-  delay = 0, 
+export const Fish: React.FC<FishProps> = ({
+  type,
+  position,
+  color,
+  size,
+  delay = 0,
   duration = 20,
   direction = 'ltr'
 }) => {
@@ -94,52 +94,52 @@ export const Fish: React.FC<FishProps> = ({
     }
   };
 
-  const { 
-    className, 
-    defaultSize, 
-    defaultColor, 
-    defaultDuration 
+  const {
+    className,
+    defaultSize,
+    defaultColor,
+    defaultDuration
   } = getDefaultProps();
 
   const actualSize = size || defaultSize;
   const actualColor = color || defaultColor;
   const actualDuration = duration || defaultDuration;
-  
+
   // สร้าง animation keyframes ตามทิศทาง
   const [animationName, setAnimationName] = useState("");
-  
+
   useEffect(() => {
     // สร้าง unique animation name สำหรับแต่ละตัว
     const uniqueId = Math.random().toString(36).substring(2, 9);
     const newAnimName = `swim-${type}-${uniqueId}`;
-    
+
     // สร้าง keyframes animation ตามทิศทาง
     let keyframes = '';
     if (direction === 'ltr') {
       keyframes = `
         @keyframes ${newAnimName} {
-          0% { transform: translateX(-100%) ${type === FishType.JELLYFISH ? 'translateY(0)' : ''}; }
-          100% { transform: translateX(100vw) ${type === FishType.JELLYFISH ? 'translateY(-20px)' : ''}; }
+          0% { transform: translateX(-100%) scaleX(-1) ${type === FishType.JELLYFISH ? 'translateY(0)' : ''}; }
+          100% { transform: translateX(100vw) scaleX(-1) ${type === FishType.JELLYFISH ? 'translateY(-20px)' : ''}; }
         }
       `;
     } else {
       keyframes = `
         @keyframes ${newAnimName} {
-          0% { transform: translateX(100vw) scaleX(-1) ${type === FishType.JELLYFISH ? 'translateY(0)' : ''}; }
-          100% { transform: translateX(-100%) scaleX(-1) ${type === FishType.JELLYFISH ? 'translateY(-20px)' : ''}; }
+          0% { transform: translateX(100vw) ${type === FishType.JELLYFISH ? 'translateY(0)' : ''}; }
+          100% { transform: translateX(-100%) ${type === FishType.JELLYFISH ? 'translateY(-20px)' : ''}; }
         }
       `;
     }
-    
+
     // เพิ่ม keyframes ลงใน document
     const styleSheet = document.createElement("style");
     styleSheet.type = "text/css";
     styleSheet.innerText = keyframes;
     styleSheet.id = newAnimName;
     document.head.appendChild(styleSheet);
-    
+
     setAnimationName(newAnimName);
-    
+
     // Cleanup เมื่อ component unmount
     return () => {
       const styleElement = document.getElementById(newAnimName);
@@ -162,8 +162,8 @@ export const Fish: React.FC<FishProps> = ({
     style.animationDelay = `${delay}s`;
   }
 
-
-  if (direction === 'rtl' && type === FishType.STARFISH) {
+  // เพิ่มเงื่อนไขใหม่สำหรับการหันหัวไปทางซ้าย
+  if (direction === 'ltr') {
     style.transform = 'scaleX(-1)';
   }
 
@@ -179,37 +179,44 @@ export const Fish: React.FC<FishProps> = ({
     switch (type) {
       case FishType.WHALE:
         return (
-          <div className={`absolute rounded-[50%] will-change-transform ${className} ${addWiggleEffect()}`} 
+          <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`}
             style={{
               ...style,
-              // เพิ่ม z-index เพื่อให้แน่ใจว่าปลาวาฬอยู่ด้านหน้า
               zIndex: 10,
-              // ปรับความโปร่งใสให้มองเห็นได้ชัดเจนขึ้น
-              backgroundColor: actualColor.replace(/[^,]+(?=\))/, '0.3')
+              backgroundColor: actualColor.replace(/[^,]+(?=\))/, '0.3'),
+              borderRadius: '50% 40% 40% 50%',
+              position: 'relative'
             }}>
             {/* ครีบหลังปลาวาฬ */}
-            <div className="absolute w-[40px] h-[60px] rounded-tl-[100%] rounded-tr-[100%]"
-              style={{ 
-                top: '-30px', 
-                left: '50%', 
+            <div className="absolute w-[60px] h-[80px] rounded-tl-[100%] rounded-tr-[100%]"
+              style={{
+                top: '-40px',
+                left: '50%',
                 transform: 'translateX(-50%)',
                 backgroundColor: actualColor.replace(/[^,]+(?=\))/, '0.3')
               }}></div>
             {/* หางปลาวาฬ */}
-            <div className="absolute w-[80px] h-[40px] right-[-20px] bottom-[20px]">
-              <div className="absolute w-full h-full rounded-br-[100%]" 
+            <div className="absolute w-[100px] h-[50px] right-[-30px] bottom-[30px]">
+              <div className="absolute w-full h-full rounded-br-[100%]"
                 style={{ backgroundColor: actualColor.replace(/[^,]+(?=\))/, '0.3') }}></div>
             </div>
             {/* ตาปลาวาฬ */}
-            <div className="absolute w-[10px] h-[10px] bg-white/50 rounded-full" 
+            <div className="absolute w-[12px] h-[12px] bg-white/50 rounded-full"
               style={{ top: '30%', left: '15%' }}></div>
             {/* ครีบข้าง */}
-            <div className="absolute w-[30px] h-[20px] rounded-full"
-              style={{ 
-                bottom: '20px', 
-                left: '30%', 
+            <div className="absolute w-[40px] h-[25px] rounded-full"
+              style={{
+                bottom: '25px',
+                left: '30%',
                 backgroundColor: actualColor.replace(/[^,]+(?=\))/, '0.3'),
                 transform: 'rotate(30deg)'
+              }}></div>
+            {/* ปากปลาวาฬ */}
+            <div className="absolute w-[40px] h-[20px] rounded-full"
+              style={{
+                bottom: '40%',
+                left: '5%',
+                backgroundColor: actualColor.replace(/[^,]+(?=\))/, '0.3')
               }}></div>
           </div>
         );
@@ -218,39 +225,66 @@ export const Fish: React.FC<FishProps> = ({
           <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`} style={{
             ...style,
             borderRadius: '50% 30% 30% 50%',
+            position: 'relative'
           }}>
             {/* ครีบหลังฉลาม */}
-            <div className="absolute" 
-              style={{ 
-                top: '-15px', 
-                left: '40%', 
+            <div className="absolute"
+              style={{
+                top: '-20px',
+                left: '40%',
                 width: '0',
                 height: '0',
-                borderLeft: '15px solid transparent',
-                borderRight: '15px solid transparent',
-                borderBottom: '30px solid ' + actualColor
+                borderLeft: '20px solid transparent',
+                borderRight: '20px solid transparent',
+                borderBottom: '40px solid ' + actualColor
               }}></div>
             {/* หางฉลาม */}
-            <div className="absolute" 
-              style={{ 
-                right: '-15px', 
-                top: '30%',
+            <div className="absolute"
+              style={{
+                right: '-30%',
+                top: '10%',
+                width: '0',
+                height: '0',
+                borderTop: '20px solid transparent',
+                borderBottom: '20px solid transparent',
+                borderLeft: '40px solid ' + actualColor
+              }}></div>
+
+            <div className="absolute"
+              style={{
+                right: '-35%',
+                top: '15%',
                 width: '0',
                 height: '0',
                 borderTop: '15px solid transparent',
                 borderBottom: '15px solid transparent',
-                borderLeft: '30px solid ' + actualColor
+                borderRight: '25px solid ' + actualColor
               }}></div>
             {/* ตาฉลาม */}
-            <div className="absolute w-[6px] h-[6px] bg-red-500/50 rounded-full" 
+            <div className="absolute w-[8px] h-[8px] bg-red-500/50 rounded-full"
               style={{ top: '30%', left: '10%' }}></div>
             {/* ครีบข้าง */}
-            <div className="absolute w-[20px] h-[10px] rounded-full"
-              style={{ 
-                bottom: '0', 
-                left: '30%', 
+            <div className="absolute w-[25px] h-[15px] rounded-full"
+              style={{
+                bottom: '5px',
+                left: '30%',
                 backgroundColor: actualColor,
                 transform: 'rotate(30deg)'
+              }}></div>
+            {/* ปากฉลาม */}
+            <div className="absolute w-[30px] h-[15px] rounded-full"
+              style={{
+                bottom: '35%',
+                left: '5%',
+                backgroundColor: actualColor
+              }}></div>
+            {/* ครีบหู */}
+            <div className="absolute w-[20px] h-[10px] rounded-full"
+              style={{
+                top: '20%',
+                left: '15%',
+                backgroundColor: actualColor,
+                transform: 'rotate(-30deg)'
               }}></div>
           </div>
         );
@@ -259,31 +293,51 @@ export const Fish: React.FC<FishProps> = ({
           <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`} style={{
             ...style,
             borderRadius: '50% 30% 30% 50%',
+            position: 'relative'
           }}>
             {/* ตาปลา */}
-            <div className="absolute w-[4px] h-[4px] bg-white/70 rounded-full" 
+            <div className="absolute w-[6px] h-[6px] bg-white/70 rounded-full"
               style={{ top: '30%', left: '15%' }}></div>
             {/* หางปลา */}
-            <div className="absolute" 
-              style={{ 
-                right: '-8px', 
+            <div className="absolute"
+              style={{
+                right: '-10px',
                 top: '25%',
                 width: '0',
                 height: '0',
-                borderTop: '6px solid transparent',
-                borderBottom: '6px solid transparent',
-                borderLeft: '12px solid ' + actualColor
+                borderTop: '8px solid transparent',
+                borderBottom: '8px solid transparent',
+                borderLeft: '15px solid ' + actualColor
               }}></div>
             {/* ครีบบน */}
-            <div className="absolute" 
-              style={{ 
-                top: '-5px', 
-                left: '50%', 
+            <div className="absolute"
+              style={{
+                top: '-8px',
+                left: '50%',
                 width: '0',
                 height: '0',
-                borderLeft: '4px solid transparent',
-                borderRight: '4px solid transparent',
-                borderBottom: '8px solid ' + actualColor
+                borderLeft: '6px solid transparent',
+                borderRight: '6px solid transparent',
+                borderBottom: '12px solid ' + actualColor
+              }}></div>
+            {/* ครีบล่าง */}
+            <div className="absolute"
+              style={{
+                bottom: '-8px',
+                left: '50%',
+                width: '0',
+                height: '0',
+                borderLeft: '6px solid transparent',
+                borderRight: '6px solid transparent',
+                borderTop: '12px solid ' + actualColor
+              }}></div>
+            {/* ครีบหู */}
+            <div className="absolute w-[12px] h-[6px] rounded-full"
+              style={{
+                top: '20%',
+                left: '20%',
+                backgroundColor: actualColor,
+                transform: 'rotate(-30deg)'
               }}></div>
           </div>
         );
@@ -292,33 +346,47 @@ export const Fish: React.FC<FishProps> = ({
           <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`} style={{
             ...style,
             borderRadius: '50% 30% 30% 50%',
+            position: 'relative'
           }}>
             {/* ตาปลาเล็ก */}
-            <div className="absolute w-[2px] h-[2px] bg-white/70 rounded-full" 
+            <div className="absolute w-[3px] h-[3px] bg-white/70 rounded-full"
               style={{ top: '30%', left: '20%' }}></div>
             {/* หางปลาเล็ก */}
-            <div className="absolute" 
-              style={{ 
-                right: '-5px', 
+            <div className="absolute"
+              style={{
+                right: '-6px',
                 top: '30%',
                 width: '0',
                 height: '0',
-                borderTop: '3px solid transparent',
-                borderBottom: '3px solid transparent',
-                borderLeft: '8px solid ' + actualColor
+                borderTop: '4px solid transparent',
+                borderBottom: '4px solid transparent',
+                borderLeft: '10px solid ' + actualColor
+              }}></div>
+            {/* ครีบหูเล็ก */}
+            <div className="absolute w-[8px] h-[4px] rounded-full"
+              style={{
+                top: '25%',
+                left: '25%',
+                backgroundColor: actualColor,
+                transform: 'rotate(-30deg)'
               }}></div>
           </div>
         );
       case FishType.STARFISH:
         return (
-          <div className={`absolute will-change-transform ${className}`} 
+          <div className={`absolute will-change-transform ${className}`}
             style={{
               ...style,
               clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-              backgroundColor: actualColor
+              backgroundColor: actualColor,
+              position: 'relative'
             }}>
-            <div className="absolute w-[8px] h-[8px] bg-white/30 rounded-full" 
+            {/* ตาดาวทะเล */}
+            <div className="absolute w-[10px] h-[10px] bg-white/30 rounded-full"
               style={{ top: '45%', left: '45%' }}></div>
+            {/* ลายบนตัวดาวทะเล */}
+            <div className="absolute w-[30%] h-[30%] rounded-full bg-white/10"
+              style={{ top: '35%', left: '35%' }}></div>
           </div>
         );
       case FishType.JELLYFISH:
@@ -326,15 +394,16 @@ export const Fish: React.FC<FishProps> = ({
           <div className={`absolute will-change-transform ${className}`} style={{
             ...style,
             borderRadius: '50% 50% 0 0',
-            overflow: 'visible'
+            overflow: 'visible',
+            position: 'relative'
           }}>
             {/* หนวดแมงกะพรุน */}
-            <div className="absolute w-full" style={{ bottom: '-20px', left: '0' }}>
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="absolute w-[2px] bg-opacity-40 animate-pulse" 
-                  style={{ 
-                    left: `${10 + (i * 10)}%`, 
-                    height: `${15 + Math.random() * 20}px`,
+            <div className="absolute w-full" style={{ bottom: '-30px', left: '0' }}>
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className="absolute w-[2px] bg-opacity-40 animate-pulse"
+                  style={{
+                    left: `${5 + (i * 8)}%`,
+                    height: `${20 + Math.random() * 30}px`,
                     backgroundColor: actualColor,
                     animationDelay: `${i * 0.2}s`,
                     animationDuration: '2s'
@@ -342,8 +411,11 @@ export const Fish: React.FC<FishProps> = ({
               ))}
             </div>
             {/* ลายบนตัวแมงกะพรุน */}
-            <div className="absolute w-[60%] h-[30%] rounded-full bg-white/10"
-              style={{ top: '30%', left: '20%' }}></div>
+            <div className="absolute w-[70%] h-[40%] rounded-full bg-white/10"
+              style={{ top: '30%', left: '15%' }}></div>
+            {/* ลายด้านข้าง */}
+            <div className="absolute w-[40%] h-[30%] rounded-full bg-white/10"
+              style={{ top: '40%', left: '30%' }}></div>
           </div>
         );
       default:
