@@ -13,6 +13,7 @@ import LazyRoute from './LazyRoute';
 import ButtonPage from '../pages/Components/ButtonPage';
 import { useState } from 'preact/hooks';
 import AccordionPage from '../pages/Components/AccordionPage';
+import CheckBoxPage from '../pages/Components/CheckBoxPage';
 
 const MemoizedNavbar = memo(Navbar);
 const MemoizedSidebar = memo(Sidebar);
@@ -47,7 +48,7 @@ function AppRouter() {
                             <Route path="accordion" element={<AccordionPage />} />
                             <Route path="button" index element={<ButtonPage />} />
                             <Route path="modal" element={<div>Modal</div>} />
-                            <Route path="checkBox" element={<div>CheckBox</div>} />
+                            <Route path="checkBox" element={<CheckBoxPage />} />
                             <Route path="input" element={<div>Input</div>} />
                         </Route>
                     </Route>

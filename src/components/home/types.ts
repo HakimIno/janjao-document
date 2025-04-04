@@ -29,4 +29,15 @@ export interface TestimonialProps {
         role: string;
         initial: string;
     };
+}
+
+export interface Sponsor {
+    name: string;
+    logo: string;
+    tier: 'platinum' | 'gold' | 'silver';
+    link: string;
+}
+
+export interface SponsorCardProps {
+    sponsor: Sponsor;
 } 

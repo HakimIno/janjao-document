@@ -91,7 +91,7 @@ const HeroSection = () => {
                                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
                                 </span>
                                 <p className="text-sm font-medium text-cyan-100 tracking-wider">
-                                    Dive into Premium React Native UI
+                                    Modern React Native UI Components
                                 </p>
                             </div>
                         </div>
@@ -104,9 +104,9 @@ const HeroSection = () => {
                         transition={{ duration: 1.2, delay: 0.2 }}
                         className="text-4xl md:text-6xl lg:text-7xl font-sf-bold text-white tracking-tight leading-tight"
                     >
-                        <span className="block">Explore the</span>
+                        <span className="block">Beautiful UI for</span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-300 to-blue-300">
-                            Abyss of UI Mastery
+                            React Native Apps
                         </span>
                     </motion.h2>
 
@@ -115,9 +115,9 @@ const HeroSection = () => {
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 1.2, delay: 0.3 }}
-                        className=" text-blue-100/90 max-w-2xl mx-auto"
+                        className="text-blue-100/90 max-w-2xl mx-auto"
                     >
-                        JanjaoUI unveils a treasure trove of exquisite components—crafted for seamless beauty and unparalleled performance beneath the surface.
+                        JanjaoUI delivers 60+ stunning, high-performance components for React Native. Build beautiful cross-platform mobile apps that feel native on both iOS and Android.
                     </motion.p>
 
                     {/* Refined CTA Buttons */}
@@ -155,9 +155,9 @@ const HeroSection = () => {
                         className="grid grid-cols-3 gap-10 pt-10 max-w-4xl mx-auto w-full"
                     >
                         {[
-                            { label: "Components", value: "50+" },
-                            { label: "Developers", value: "100K+" },
-                            { label: "Stars", value: "2.5K" },
+                            { label: "Components", value: "60+" },
+                            { label: "Installations", value: "250K+" },
+                            { label: "Platforms", value: "iOS & Android" },
                         ].map((stat, index) => (
                             <div key={index} className="flex flex-col items-center">
                                 <div className="text-3xl md:text-4xl font-sf-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-teal-300 mb-2">

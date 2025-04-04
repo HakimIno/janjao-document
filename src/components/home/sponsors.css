@@ -1,0 +1,495 @@
+/* Sponsor container animations */
+.sponsors-container {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+  background: linear-gradient(180deg, rgba(30, 58, 138, 0.5) 0%, rgba(30, 58, 138, 0.8) 100%);
+  border: 0px solid rgba(78, 185, 233, 0.1);
+  
+  overflow: hidden;
+}
+
+/* Animated border glow effect */
+@keyframes border-glow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-border-glow {
+  animation: border-glow 4s ease infinite;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  padding: 2px;
+}
+
+/* Ocean ripple effect */
+.sponsors-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  animation: water-ripple 25s linear infinite;
+}
+
+/* Shimmer lines effects */
+.shimmer-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.shimmer-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(0, 225, 255, 0.6) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  opacity: 0.7;
+  border-radius: 100%;
+  transform: translateX(-100%);
+  animation: shimmer linear infinite;
+  will-change: transform;
+}
+
+/* Bubble animations */
+.bubbles-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bubble {
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(0, 206, 255, 0.4) 40%,
+    rgba(0, 170, 255, 0.2) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  box-shadow: 0 0 5px rgba(0, 225, 255, 0.3);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  position: absolute;
+  animation: float cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform;
+}
+
+/* Light beam effect */
+.light-beam {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+ 
+  animation: beam 12s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Underwater light rays effect */
+.sponsors-container::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 10%;
+  width: 80%;
+  height: 300%;
+  
+  transform: rotate(15deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+/* Marquee container */
+.marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    white 15%,
+    white 85%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    white 15%,
+    white 85%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  animation: infiniteScroll 50s linear infinite;
+  width: max-content;
+  padding: 1.5rem 0;
+}
+
+/* Sponsor items */
+.sponsor-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  margin: 0 2rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1rem;
+ 
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(78, 185, 233, 0.16);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.sponsor-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-item:hover::before,
+.sponsor-item.center-focus::before {
+  opacity: 1;
+}
+
+.sponsor-item:hover,
+.sponsor-item.center-focus {
+  transform: scale(1.35) !important;
+  
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.25),
+    0 0 25px rgba(0, 225, 255, 0.4),
+    inset 0 1px 3px rgba(255, 255, 255, 0.15);
+  border-color: rgba(0, 225, 255, 0.5);
+  z-index: 10;
+}
+
+/* Center shimmer specific styles */
+.sponsor-item.center-shimmer {
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.2),
+    0 0 35px rgba(0, 225, 255, 0.5),
+    inset 0 1px 3px rgba(255, 255, 255, 0.15);
+  animation: pulsate 2s ease-in-out infinite;
+}
+
+/* Logo container */
+.logo-container {
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.sponsor-item:hover .logo-container,
+.sponsor-item.center-focus .logo-container {
+  filter: drop-shadow(0 0 10px rgba(0, 225, 255, 0.7));
+  transform: scale(1.05);
+}
+
+/* Tooltip style */
+.sponsor-tooltip {
+  position: absolute;
+  bottom: -3rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(0.5rem);
+  background: rgba(5, 42, 76, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: rgb(224, 240, 255);
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  border: 1px solid rgba(0, 225, 255, 0.3);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 5px rgba(0, 225, 255, 0.2);
+  z-index: 20;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  top: -0.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.7rem;
+  height: 0.7rem;
+  background: rgba(5, 42, 76, 0.9);
+  rotate: 45deg;
+  border-left: 1px solid rgba(0, 225, 255, 0.3);
+  border-top: 1px solid rgba(0, 225, 255, 0.3);
+}
+
+.sponsor-item:hover .sponsor-tooltip,
+.sponsor-item.center-focus .sponsor-tooltip {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Shimmer effects */
+.shimmer-effect {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(
+    45deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.2) 40%,
+    rgba(0, 225, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.2) 60%,
+    transparent 80%
+  );
+  transition: all 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sponsor-item:hover .shimmer-effect {
+  animation: sheen 1.5s forwards;
+  opacity: 1;
+}
+
+/* Make shimmer effect active for center items */
+.shimmer-effect.active {
+  animation: sheen 2s infinite !important;
+  opacity: 1;
+}
+
+/* Glow effect */
+.sponsor-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 225, 255, 0.6) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  border-radius: 1rem;
+}
+
+.sponsor-item:hover .sponsor-glow {
+  opacity: 0.6;
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Make glow effect active for center items */
+.sponsor-glow.active {
+  opacity: 0.7;
+  animation: glow 3s ease-in-out infinite !important;
+}
+
+/* Button styles */
+.sponsor-button {
+  background: linear-gradient(
+    45deg,
+    rgba(30, 58, 138, 0.2),
+    rgba(30, 58, 138, 0.4),
+    rgba(30, 58, 138, 0.6),
+    rgba(30, 58, 138, 0.8)
+  );
+  background-size: 300% 100%;
+  animation: shimmering-button 8s ease infinite;
+  border: 1.5px dashed rgba(0, 225, 255, 0.3);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(0, 225, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.sponsor-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, rgba(2, 132, 199, 0.5), rgba(14, 165, 233, 0.5), rgba(56, 189, 248, 0.5), rgba(14, 165, 233, 0.5));
+  background-size: 400%;
+  border-radius: 50px;
+  z-index: -1;
+  animation: shimmering-button 8s ease infinite;
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sponsor-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 225, 255, 0.4);
+}
+
+.sponsor-button:hover::before {
+  opacity: 0.7;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Keyframes animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-100vh) scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-200vh) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes beam {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes water-ripple {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes infiniteScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-22rem * 5));
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes sheen {
+  0% {
+    transform: rotate(45deg) translateY(-30%);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(45deg) translateY(200%);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmering-button {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    box-shadow: 
+      0 15px 30px rgba(0, 0, 0, 0.2),
+      0 0 30px rgba(0, 225, 255, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 15px 30px rgba(0, 0, 0, 0.3),
+      0 0 45px rgba(0, 225, 255, 0.6);
+  }
+  100% {
+    box-shadow: 
+      0 15px 30px rgba(0, 0, 0, 0.2),
+      0 0 30px rgba(0, 225, 255, 0.4);
+  }
+} 

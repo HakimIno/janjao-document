@@ -126,6 +126,23 @@
   }
 }
 
+@keyframes beam {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    left: calc(100% - 80px);
+    opacity: 0;
+  }
+}
+
 /* Fish styles */
 .whale {
   position: relative;
@@ -312,5 +329,9 @@
 
 .animate-bubble-fast { 
   animation: bubble-fast 2s ease-in-out infinite; 
+}
+
+.animate-beam {
+  animation: beam 3s infinite;
 }
 
