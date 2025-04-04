@@ -23,24 +23,24 @@ const MemoizedSponsors = React.memo(Sponsors);
 
 // Helper for performance optimization
 const useAnimationStyles = (styles: string) => {
-  const styleRef = useRef<HTMLStyleElement | null>(null);
-  
-  useEffect(() => {
-    // Check if style element already exists
-    if (!styleRef.current) {
-      const styleElement = document.createElement('style');
-      styleElement.textContent = styles;
-      document.head.appendChild(styleElement);
-      styleRef.current = styleElement;
-    }
+    const styleRef = useRef<HTMLStyleElement | null>(null);
 
-    return () => {
-      if (styleRef.current) {
-        document.head.removeChild(styleRef.current);
-        styleRef.current = null;
-      }
-    };
-  }, [styles]);
+    useEffect(() => {
+        // Check if style element already exists
+        if (!styleRef.current) {
+            const styleElement = document.createElement('style');
+            styleElement.textContent = styles;
+            document.head.appendChild(styleElement);
+            styleRef.current = styleElement;
+        }
+
+        return () => {
+            if (styleRef.current) {
+                document.head.removeChild(styleRef.current);
+                styleRef.current = null;
+            }
+        };
+    }, [styles]);
 };
 
 const HomePage: React.FC = () => {
@@ -49,20 +49,20 @@ const HomePage: React.FC = () => {
 
     // Detect if we're on a low-performance device
     const isLowPerformanceDevice = useRef(
-      window.navigator.hardwareConcurrency < 4 || // Less than 4 CPU cores
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        window.navigator.userAgent
-      )
+        window.navigator.hardwareConcurrency < 4 || // Less than 4 CPU cores
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            window.navigator.userAgent
+        )
     ).current;
 
     return (
         <LazyMotion features={domAnimation}>
             <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-900 via-blue-950 to-black relative overflow-hidden">
                 {/* Underwater Background Effects - only render on higher performance devices */}
-                {!isLowPerformanceDevice && <MemoizedUnderwaterBackground />}
+                <MemoizedUnderwaterBackground />
                 {!isLowPerformanceDevice && <MemoizedUnderwaterScene />}
-                
-                {/* Main Content */}
+
+                    {/* Main Content */}
                 <div className="relative z-10">
                     {/* Hero Section */}
                     <section className="min-h-full relative">
