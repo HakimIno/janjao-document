@@ -24,8 +24,22 @@ function AppRouter() {
     return (
         <BrowserRouter>
             <Suspense fallback={
-                <div className="min-h-screen flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-400"></div>
+                <div className="min-h-screen flex items-center justify-center bg-gradient-to-bl from-blue-900 to-blue-950">
+                    <div className="absolute inset-0 bg-[url('/ocean-texture.png')] opacity-5 pointer-events-none"></div>
+                    <div className="relative">
+                        <div className="w-16 h-16 border-4 border-blue-400/30 rounded-full"></div>
+                        <div className="absolute inset-0 animate-water-wave">
+                            <div className="w-16 h-8 bg-blue-400/60 rounded-full blur-sm transform translate-y-4"></div>
+                        </div>
+                        <div className="absolute inset-0 animate-spin">
+                            <div className="w-16 h-16 border-t-4 border-blue-400 rounded-full"></div>
+                        </div>
+                        
+                        {/* Bubbles */}
+                        <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-blue-300/40 rounded-full animate-bubble-rise-1"></div>
+                        <div className="absolute -bottom-1 left-6 w-2 h-2 bg-blue-300/40 rounded-full animate-bubble-rise-2"></div>
+                        <div className="absolute -bottom-3 left-3 w-2 h-2 bg-blue-300/40 rounded-full animate-bubble-rise-3"></div>
+                    </div>
                 </div>
             }>
                 <Routes>
