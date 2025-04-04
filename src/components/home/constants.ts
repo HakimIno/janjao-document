@@ -1,4 +1,12 @@
 import { Stat, Feature } from './types';
+import {
+  PerformanceIcon,
+  DesignSystemIcon,
+  CrossPlatformIcon,
+  AccessibilityIcon,
+  ExpoIcon,
+  TypeScriptIcon
+} from './icons/FeatureIcons';
 
 export const STATS: Stat[] = [
     { label: "Installations", value: "250K+", icon: "📱" },
@@ -7,38 +15,7 @@ export const STATS: Stat[] = [
     { label: "Contributors", value: "85+", icon: "👨‍💻" }
 ];
 
-export const FEATURES: Feature[] = [
-    {
-        icon: "⚡",
-        title: "Native Performance",
-        description: "Built for maximum performance on both iOS and Android. Our components use native primitives for buttery-smooth animations and interactions."
-    },
-    {
-        icon: "🎨",
-        title: "Modern Design System",
-        description: "Fully customizable design tokens that adapt to light/dark themes and respect platform conventions while maintaining a consistent look."
-    },
-    {
-        icon: "📱",
-        title: "Cross-Platform Excellence",
-        description: "Pixel-perfect consistency across iOS and Android with adaptive behavior that feels natural on each platform."
-    },
-    {
-        icon: "♿",
-        title: "Full Accessibility",
-        description: "Every component is fully accessible with VoiceOver and TalkBack support, respecting platform guidelines for assistive technologies."
-    },
-    {
-        icon: "🚀",
-        title: "Expo Compatible",
-        description: "Seamless integration with Expo and bare React Native projects. No native linking required for most components."
-    },
-    {
-        icon: "🔌",
-        title: "TypeScript Ready",
-        description: "Built with TypeScript from the ground up with complete type definitions and excellent developer experience."
-    }
-];
+
 
 export const TESTIMONIALS = [
     {
