@@ -9,12 +9,12 @@ export const Bubbles: React.FC<BubbleProps> = ({ count = 15 }) => {
   const bubbles = React.useMemo(() => {
     return Array.from({ length: count }).map((_, i) => ({
       id: i,
-      size: Math.random() * 20 + 5, // ลดขนาดลงเพื่อเพิ่มประสิทธิภาพ
+      size: Math.random() * 10 + 4, // ลดขนาดลงเพื่อเพิ่มประสิทธิภาพ
       left: Math.random() * 100,
       bottom: Math.random() * 20,
-      duration: Math.random() * 8 + 8,
-      delay: Math.random() * 5,
-      opacity: Math.random() * 0.3 + 0.1
+      duration: Math.random() * 5 + 5, // ลดระยะเวลาอนิเมชัน
+      delay: Math.random() * 3,
+      opacity: Math.random() * 0.2 + 0.1 // ลดความทึบแสง
     }));
   }, [count]);
 
@@ -29,10 +29,8 @@ export const Bubbles: React.FC<BubbleProps> = ({ count = 15 }) => {
             height: `${bubble.size}px`,
             left: `${bubble.left}%`,
             bottom: `${bubble.bottom}%`,
-            background: 'radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), rgba(56, 189, 248, 0.1))',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            boxShadow: '0 0 5px rgba(56, 189, 248, 0.1)',
-            animation: `bubbleRise ${bubble.duration}s ease-in infinite`,
+            backgroundColor: 'rgba(255, 255, 255, 0.2)', // ใช้สีพื้นฐานแทนเพื่อลดการคำนวณ
+            animation: `bubbleRise ${bubble.duration}s linear infinite`,
             animationDelay: `${bubble.delay}s`,
             opacity: bubble.opacity
           }}

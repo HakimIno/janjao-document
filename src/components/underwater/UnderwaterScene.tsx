@@ -10,26 +10,26 @@ export const UnderwaterScene: React.FC = () => {
     cyan: 'rgba(56, 189, 248, 0.3)',
     teal: 'rgba(94, 234, 212, 0.3)',
     purple: 'rgba(167, 139, 250, 0.3)',
-    orange: 'rgba(251, 146, 60, 0.3)',
-    amber: 'rgba(251, 191, 36, 0.3)',
-    green: 'rgba(74, 222, 128, 0.3)',
-    red: 'rgba(248, 113, 113, 0.3)',
-    blue: 'rgba(147, 197, 253, 0.3)'
+    orange: 'rgba(251, 146, 60, 0.3)'
   };
 
   // สร้างสีที่หลากหลายสำหรับปลาเล็ก
   const smallFishColors = {
     sky: 'rgba(14, 165, 233, 0.25)',
     teal: 'rgba(20, 184, 166, 0.25)',
-    fuchsia: 'rgba(217, 70, 239, 0.25)',
-    pink: 'rgba(236, 72, 153, 0.25)',
-    lime: 'rgba(132, 204, 22, 0.25)',
-    cyan: 'rgba(6, 182, 212, 0.25)'
+    fuchsia: 'rgba(217, 70, 239, 0.25)'
   };
+
+  // Check if device is likely mobile
+  const isMobile = window.innerWidth < 768;
+  
+  // Reduce fish count on mobile
+  const mediumFishLimit = isMobile ? 2 : 4;
+  const smallFishLimit = isMobile ? 2 : 3;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* ปลาวาฬ */}
+      {/* ปลาวาฬ - เหลือแค่ 1 ตัว */}
       <Fish 
         type={FishType.WHALE} 
         position={{ bottom: '15%', left: '-150px' }} 
@@ -38,31 +38,12 @@ export const UnderwaterScene: React.FC = () => {
         direction="ltr"
       />
       
-      <Fish 
-        type={FishType.WHALE} 
-        position={{ bottom: '40%', left: '-150px' }} 
-        color="rgba(129, 140, 248, 0.1)"
-        size={{ width: 250, height: 100 }}
-        duration={50}
-        delay={15}
-        direction="ltr"
-      />
-
-      {/* ปลาฉลาม */}
-      <Fish 
-        type={FishType.SHARK} 
-        position={{ top: '30%', left: '-120px' }} 
-        duration={25}
-        delay={5}
-        direction="ltr"
-      />
-
-      {/* ปลาขนาดกลาง */}
-      {Object.entries(fishColors).map(([, color], i) => (
+      {/* ปลาขนาดกลาง - ลดจาก 8 ตัวเหลือ 4 */}
+      {Object.entries(fishColors).slice(0, mediumFishLimit).map(([, color], i) => (
         <Fish 
           key={`medium-fish-${i}`}
           type={FishType.MEDIUM_FISH} 
-          position={{ top: `${15 + i * 8}%`, left: '-50px' }} 
+          position={{ top: `${15 + i * 15}%`, left: '-50px' }} 
           color={color}
           size={{ width: 30 + Math.random() * 15, height: 15 + Math.random() * 8 }}
           duration={15 + i * 2}
@@ -71,8 +52,8 @@ export const UnderwaterScene: React.FC = () => {
         />
       ))}
 
-      {/* ปลาขนาดเล็ก */}
-      {Object.entries(smallFishColors).map(([, color], i) => (
+      {/* ปลาขนาดเล็ก - ลดจาก 6 ตัวเหลือ 3 */}
+      {Object.entries(smallFishColors).slice(0, smallFishLimit).map(([, color], i) => (
         <Fish 
           key={`small-fish-${i}`}
           type={FishType.SMALL_FISH} 
@@ -84,6 +65,9 @@ export const UnderwaterScene: React.FC = () => {
           direction="ltr"
         />
       ))}
+
+      {/* ลดจำนวนฟองอากาศลง */}
+      <Bubbles count={isMobile ? 5 : 10} />
 
       {/* ปลาดาว */}
       {Array.from({ length: 3 }).map((_, i) => (
@@ -108,9 +92,6 @@ export const UnderwaterScene: React.FC = () => {
           delay={i * 2}
         />
       ))}
-
-      {/* ฟองอากาศ */}
-      <Bubbles count={12} />
 
       {/* สาหร่าย */}
       <Seaweed count={5} />

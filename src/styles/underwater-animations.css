@@ -76,6 +76,16 @@
   }
 }
 
+@keyframes swim-ltr {
+  0% { transform: translateX(-100%) scaleX(-1); }
+  100% { transform: translateX(100vw) scaleX(-1); }
+}
+
+@keyframes swim-rtl {
+  0% { transform: translateX(100vw); }
+  100% { transform: translateX(-100%); }
+}
+
 @keyframes jellyfishFloat {
   0% {
     transform: translateY(0) scaleY(1);
@@ -108,11 +118,11 @@
 
 @keyframes bubbleRise {
   0% {
-    transform: translateY(0) scale(1);
-    opacity: var(--opacity);
+    transform: translateY(0);
+    opacity: var(--opacity, 0.5);
   }
   100% {
-    transform: translateY(-70vh) scale(0.8);
+    transform: translateY(-50vh);
     opacity: 0;
   }
 }
@@ -333,5 +343,15 @@
 
 .animate-beam {
   animation: beam 3s infinite;
+}
+
+.animate-swim-ltr {
+  animation: swim-ltr linear infinite;
+  will-change: transform;
+}
+
+.animate-swim-rtl {
+  animation: swim-rtl linear infinite;
+  will-change: transform;
 }
 

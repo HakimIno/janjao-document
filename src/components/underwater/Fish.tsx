@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // ประเภทของปลาและสัตว์ทะเล
 export enum FishType {
@@ -28,6 +28,12 @@ interface FishProps {
   duration?: number;
   direction?: 'ltr' | 'rtl'; // left-to-right หรือ right-to-left
 }
+
+// Static animation class names to avoid dynamic style generation
+const ANIMATION_CLASSES = {
+  ltr: 'animate-swim-ltr',
+  rtl: 'animate-swim-rtl'
+};
 
 // Component สำหรับปลาและสัตว์ทะเลแต่ละประเภท
 export const Fish: React.FC<FishProps> = ({
@@ -105,62 +111,15 @@ export const Fish: React.FC<FishProps> = ({
   const actualColor = color || defaultColor;
   const actualDuration = duration || defaultDuration;
 
-  // สร้าง animation keyframes ตามทิศทาง
-  const [animationName, setAnimationName] = useState("");
-
-  useEffect(() => {
-    // สร้าง unique animation name สำหรับแต่ละตัว
-    const uniqueId = Math.random().toString(36).substring(2, 9);
-    const newAnimName = `swim-${type}-${uniqueId}`;
-
-    // สร้าง keyframes animation ตามทิศทาง
-    let keyframes = '';
-    if (direction === 'ltr') {
-      keyframes = `
-        @keyframes ${newAnimName} {
-          0% { transform: translateX(-100%) scaleX(-1) ${type === FishType.JELLYFISH ? 'translateY(0)' : ''}; }
-          100% { transform: translateX(100vw) scaleX(-1) ${type === FishType.JELLYFISH ? 'translateY(-20px)' : ''}; }
-        }
-      `;
-    } else {
-      keyframes = `
-        @keyframes ${newAnimName} {
-          0% { transform: translateX(100vw) ${type === FishType.JELLYFISH ? 'translateY(0)' : ''}; }
-          100% { transform: translateX(-100%) ${type === FishType.JELLYFISH ? 'translateY(-20px)' : ''}; }
-        }
-      `;
-    }
-
-    // เพิ่ม keyframes ลงใน document
-    const styleSheet = document.createElement("style");
-    styleSheet.type = "text/css";
-    styleSheet.innerText = keyframes;
-    styleSheet.id = newAnimName;
-    document.head.appendChild(styleSheet);
-
-    setAnimationName(newAnimName);
-
-    // Cleanup เมื่อ component unmount
-    return () => {
-      const styleElement = document.getElementById(newAnimName);
-      if (styleElement) {
-        document.head.removeChild(styleElement);
-      }
-    };
-  }, [type, direction]);
-
   // สร้าง style ตามประเภทของปลา
   const style: React.CSSProperties = {
     ...position,
     width: `${actualSize.width}px`,
     height: `${actualSize.height}px`,
     backgroundColor: actualColor,
+    animationDuration: `${actualDuration}s`,
+    animationDelay: `${delay}s`
   };
-
-  if (animationName) {
-    style.animation = `${animationName} ${actualDuration}s linear infinite`;
-    style.animationDelay = `${delay}s`;
-  }
 
   // เพิ่มเงื่อนไขใหม่สำหรับการหันหัวไปทางซ้าย
   if (direction === 'ltr') {
@@ -174,12 +133,15 @@ export const Fish: React.FC<FishProps> = ({
     return "";
   };
 
+  // Use predefined animation classes instead of dynamic keyframes
+  const animationClass = direction === 'ltr' ? ANIMATION_CLASSES.ltr : ANIMATION_CLASSES.rtl;
+
   // สร้าง element ตามประเภทของปลา
   const renderFish = () => {
     switch (type) {
       case FishType.WHALE:
         return (
-          <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`}
+          <div className={`absolute ${animationClass} ${className} ${addWiggleEffect()} will-change-transform`}
             style={{
               ...style,
               zIndex: 10,
@@ -222,7 +184,7 @@ export const Fish: React.FC<FishProps> = ({
         );
       case FishType.SHARK:
         return (
-          <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`} style={{
+          <div className={`absolute ${animationClass} ${className} ${addWiggleEffect()} will-change-transform`} style={{
             ...style,
             borderRadius: '50% 30% 30% 50%',
             position: 'relative'
@@ -290,7 +252,7 @@ export const Fish: React.FC<FishProps> = ({
         );
       case FishType.MEDIUM_FISH:
         return (
-          <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`} style={{
+          <div className={`absolute ${animationClass} ${className} ${addWiggleEffect()} will-change-transform`} style={{
             ...style,
             borderRadius: '50% 30% 30% 50%',
             position: 'relative'
@@ -343,7 +305,7 @@ export const Fish: React.FC<FishProps> = ({
         );
       case FishType.SMALL_FISH:
         return (
-          <div className={`absolute will-change-transform ${className} ${addWiggleEffect()}`} style={{
+          <div className={`absolute ${animationClass} ${className} ${addWiggleEffect()} will-change-transform`} style={{
             ...style,
             borderRadius: '50% 30% 30% 50%',
             position: 'relative'
@@ -374,7 +336,7 @@ export const Fish: React.FC<FishProps> = ({
         );
       case FishType.STARFISH:
         return (
-          <div className={`absolute will-change-transform ${className}`}
+          <div className={`absolute ${animationClass} ${className}`}
             style={{
               ...style,
               clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
@@ -391,7 +353,7 @@ export const Fish: React.FC<FishProps> = ({
         );
       case FishType.JELLYFISH:
         return (
-          <div className={`absolute will-change-transform ${className}`} style={{
+          <div className={`absolute ${animationClass} ${className}`} style={{
             ...style,
             borderRadius: '50% 50% 0 0',
             overflow: 'visible',
@@ -419,7 +381,7 @@ export const Fish: React.FC<FishProps> = ({
           </div>
         );
       default:
-        return null;
+        return <div className={`absolute ${animationClass} ${className} ${addWiggleEffect()} will-change-transform`} style={style}></div>;
     }
   };
 
