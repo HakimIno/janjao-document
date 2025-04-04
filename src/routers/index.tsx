@@ -12,6 +12,7 @@ const Sidebar = lazy(() => import('../components/SlideBar'));
 import LazyRoute from './LazyRoute';
 import ButtonPage from '../pages/Components/ButtonPage';
 import { useState } from 'preact/hooks';
+import AccordionPage from '../pages/Components/AccordionPage';
 
 const MemoizedNavbar = memo(Navbar);
 const MemoizedSidebar = memo(Sidebar);
@@ -43,9 +44,9 @@ function AppRouter() {
                         <Route path="colors" element={<ColorsPage />} />
 
                         <Route path="components">
+                            <Route path="accordion" element={<AccordionPage />} />
                             <Route path="button" index element={<ButtonPage />} />
                             <Route path="modal" element={<div>Modal</div>} />
-                            <Route path="accordion" element={<div>Accordion</div>} />
                             <Route path="checkBox" element={<div>CheckBox</div>} />
                             <Route path="input" element={<div>Input</div>} />
                         </Route>

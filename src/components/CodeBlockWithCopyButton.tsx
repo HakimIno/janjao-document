@@ -2,26 +2,25 @@ import { useState } from 'react';
 import { Clipboard, Check } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-
-const customTheme = {
+const tropicalSeaTheme = {
     'pre[class*="language-"]': {
-        background: '#0a0a0a', // เข้มกว่าเล็กน้อยเพื่อให้ใกล้เคียงกับ Bearded Theme Black
+        background: '#1e2a44', // Deep navy blue, like a calm sea at dusk
     },
-    'comment': { color: '#676e95' }, // สีเทาอมฟ้าสำหรับคอมเมนต์
-    'property': { color: '#7dd3fc' }, // สีฟ้าอ่อนสำหรับ properties
-    'keyword': { color: '#a78bfa' }, // สีม่วงอ่อนสำหรับ keywords
-    'string': { color: '#bef264' }, // สีเขียวอ่อนสำหรับ strings
-    'function': { color: '#60a5fa' }, // สีฟ้าสำหรับ functions
-    'operator': { color: '#7dd3fc' }, // สีฟ้าอ่อนสำหรับ operators
-    'punctuation': { color: '#7dd3fc' }, // สีฟ้าอ่อนสำหรับ punctuation
-    'variable': { color: '#f07178' }, // สีแดงอ่อนสำหรับตัวแปร
-    'number': { color: '#f78c6c' }, // สีส้มสำหรับตัวเลข
-    'boolean': { color: '#ff5874' }, // สีชมพูเข้มสำหรับ boolean
-    'constant': { color: '#a78bfa' }, // สีม่วงอ่อนสำหรับค่าคงที่
-    'builtin': { color: '#fbbf24' }, // สีเหลืองสำหรับฟังก์ชัน built-in
-    'attr-name': { color: '#a78bfa' }, // สีม่วงอ่อนสำหรับชื่อ attribute
-    'attr-value': { color: '#bef264' }, // สีเขียวอ่อนสำหรับค่า attribute
-    'class-name': { color: '#fbbf24' }, // สีเหลืองสำหรับชื่อคลาส
+    'comment': { color: '#7f8fa6' }, // Soft blue-gray, like sea mist
+    'property': { color: '#60a5fa' }, // Light sky blue, clean and crisp
+    'keyword': { color: '#22d3ee' }, // Bright cyan, like sparkling ocean foam
+    'string': { color: '#34d399' }, // Fresh teal, like sea glass
+    'function': { color: '#60a5fa' }, // Light sky blue, matching properties
+    'operator': { color: '#22d3ee' }, // Bright cyan, matching keywords
+    'punctuation': { color: '#22d3ee' }, // Bright cyan, for consistency
+    'variable': { color: '#60a5fa' }, // Light sky blue, unified with properties
+    'number': { color: '#34d399' }, // Teal, matching strings
+    'boolean': { color: '#22d3ee' }, // Bright cyan, matching keywords
+    'constant': { color: '#22d3ee' }, // Bright cyan, matching keywords
+    'builtin': { color: '#60a5fa' }, // Light sky blue, matching properties
+    'attr-name': { color: '#22d3ee' }, // Bright cyan, matching keywords
+    'attr-value': { color: '#34d399' }, // Teal, matching strings
+    'class-name': { color: '#60a5fa' }, // Light sky blue, matching properties
 };
 
 const CodeBlockWithCopyButton = ({ codeSnippet, language = 'jsx' }: { codeSnippet: string, language: string }) => {
@@ -35,22 +34,22 @@ const CodeBlockWithCopyButton = ({ codeSnippet, language = 'jsx' }: { codeSnippe
     };
 
     return (
-        <div className="relative h-[650px] w-full bg-neutral-900 rounded-lg border-[1.5px] border-neutral-900 overflow-auto">
+        <div className="relative h-[650px] w-full bg-gradient-to-br from-[#1a1a1a] to-[#1a1a1a] rounded-lg border-[1.5px] border-[#00b7eb] overflow-auto">
             <button
                 onClick={copyToClipboard}
-                className="absolute top-2 right-5 p-2 bg-neutral-800 hover:bg-neutral-700 rounded-md transition-colors duration-200"
+                className="absolute top-2 right-5 p-2 bg-[#1e3a8a] hover:bg-[#172554] rounded-md transition-colors duration-200"
             >
                 {isCopied ? (
-                    <Check className="w-5 h-5 text-green-500" />
+                    <Check className="w-5 h-5 text-[#00cc99]" />
                 ) : (
-                    <Clipboard className="w-5 h-5 text-neutral-400" />
+                    <Clipboard className="w-5 h-5 text-[#1e90ff]" />
                 )}
             </button>
             <div className="px-5 pb-5">
                 <SyntaxHighlighter
                     customStyle={{ backgroundColor: 'transparent' }}
                     language={language}
-                    style={customTheme}
+                    style={tropicalSeaTheme}
                     className="text-[16px] h-full"
                 >
                     {codeSnippet}

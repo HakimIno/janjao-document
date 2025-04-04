@@ -19,7 +19,7 @@ const Logo: React.FC<JanJaoLogoProps> = ({ size = 'md', className = '' }) => {
         className={`
           ${sizeStyles[size]} font-logo 
           tracking-wide relative z-10 bg-clip-text
-           text-transparent bg-gradient-to-r from-sky-500 via-sky-600 to-teal-600
+           text-transparent bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500
            
         `}
       >
