@@ -214,21 +214,6 @@ const CheckBoxPage = () => {
         }
     ];
 
-    const checkboxVariants = [
-        {
-            title: 'Default',
-            description: 'The standard checkbox with a square shape and default styling.'
-        },
-        {
-            title: 'Round',
-            description: 'A circular checkbox for a more modern, softer appearance.'
-        },
-        {
-            title: 'Todo',
-            description: 'A specialized checkbox designed for todo lists with additional features.'
-        }
-    ];
-
     const sections = [
         {
             id: 'introduction',

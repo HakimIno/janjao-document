@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, LazyMotion, domAnimation } from 'framer-motion';
+import { LazyMotion, domAnimation } from 'framer-motion';
 import { UnderwaterScene } from '../components/underwater/UnderwaterScene';
 import '../styles/underwater-animations.css';
 import HeroSection from '../components/underwater/HeroSection';

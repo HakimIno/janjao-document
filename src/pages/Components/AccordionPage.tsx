@@ -19,17 +19,6 @@ const AccordionPage = () => {
         }
     ];
 
-    const accordionVariants = [
-        {
-            title: 'Default',
-            description: 'The default accordion variant with solid background and rounded corners.'
-        },
-        {
-            title: 'Faded',
-            description: 'A subtle variant with faded background and rounded corners.'
-        }
-    ];
-
     const sections = [
         {
             id: 'introduction',

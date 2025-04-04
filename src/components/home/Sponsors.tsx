@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './sponsors.css'; // CSS file for optimized animations
 import { sponsors } from './spon';
 
@@ -15,7 +15,7 @@ const Sponsors = () => {
     const containerRect = marqueeRef.current.getBoundingClientRect();
     const containerCenter = containerRect.left + containerRect.width / 2;
     
-    itemsRef.current.forEach((item, index) => {
+    itemsRef.current.forEach((item) => {
       if (!item) return;
       
       const itemRect = item.getBoundingClientRect();

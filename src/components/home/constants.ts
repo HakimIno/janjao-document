@@ -1,12 +1,4 @@
-import { Stat, Feature } from './types';
-import {
-  PerformanceIcon,
-  DesignSystemIcon,
-  CrossPlatformIcon,
-  AccessibilityIcon,
-  ExpoIcon,
-  TypeScriptIcon
-} from './icons/FeatureIcons';
+import { Stat } from './types';
 
 export const STATS: Stat[] = [
     { label: "Installations", value: "250K+", icon: "📱" },
