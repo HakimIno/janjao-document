@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ isSidebarOpen, onMenuClick, className, 
     return (
         <>
             <nav className={`
-                fixed top-0 w-full z-50 transition-all duration-300 px-0 lg:px-10
+                fixed top-0 w-full z-50 transition-all duration-300 px-0 lg:px-10 
                 border-b border-blue-800/50
                 ${isScrolled
                     ? ' backdrop-blur-xl  shadow-lg'

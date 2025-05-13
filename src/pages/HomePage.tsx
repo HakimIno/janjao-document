@@ -3,23 +3,19 @@ import { LazyMotion, domAnimation } from 'framer-motion';
 import { UnderwaterScene } from '../components/underwater/UnderwaterScene';
 import '../styles/underwater-animations.css';
 import HeroSection from '../components/underwater/HeroSection';
-import { StatItem } from '../components/home/StatItem';
 import { Testimonial } from '../components/home/Testimonial';
 import { UnderwaterBackground } from '../components/home/UnderwaterBackground';
-import { STATS, TESTIMONIALS } from '../components/home/constants';
+import { TESTIMONIALS } from '../components/home/constants';
 import { ANIMATION_STYLES } from '../components/home/animations';
 import { ComponentShowcase } from '../components/home/ComponentShowcase';
-import Sponsors from '../components/home/Sponsors';
 import { FeaturesSection } from '../components/home/FeaturesSection';
 import { FEATURES } from '../components/home/Feature';
 
-// Create memoized components to prevent unnecessary re-renders
 const MemoizedUnderwaterScene = React.memo(UnderwaterScene);
 const MemoizedUnderwaterBackground = React.memo(UnderwaterBackground);
 const MemoizedHeroSection = React.memo(HeroSection);
 const MemoizedFeaturesSection = React.memo(FeaturesSection);
 const MemoizedComponentShowcase = React.memo(ComponentShowcase);
-const MemoizedSponsors = React.memo(Sponsors);
 
 // Helper for performance optimization
 const useAnimationStyles = (styles: string) => {
@@ -62,7 +58,7 @@ const HomePage: React.FC = () => {
                 <MemoizedUnderwaterBackground />
                 {!isLowPerformanceDevice && <MemoizedUnderwaterScene />}
 
-                    {/* Main Content */}
+                {/* Main Content */}
                 <div className="relative z-10">
                     {/* Hero Section */}
                     <section className="min-h-full relative">
@@ -76,19 +72,6 @@ const HomePage: React.FC = () => {
 
                             {/* Component Showcase */}
                             <MemoizedComponentShowcase />
-
-                            {/* Stats Section */}
-                            <div className="relative mb-32">
-                                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-teal-500/20 blur-2xl opacity-20" />
-                                <div className="relative bg-blue-900/30 backdrop-blur-md rounded-3xl p-12 border border-teal-400/20 hover:border-cyan-400/30 transition-all duration-500">
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-                                        {STATS.map((stat, index) => (
-                                            <StatItem key={index} stat={stat} index={index} />
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-
 
                             {/* Social Proof Section */}
                             <div className="relative bg-blue-900/20 backdrop-blur-md rounded-3xl p-12 border border-cyan-400/20 mb-32">
@@ -104,8 +87,10 @@ const HomePage: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Sponsors Section */}
-                            <MemoizedSponsors />
+                            {/* Footer Section */}
+                            <div className="text-center">
+                                <p className="text-blue-100/70 text-sm">© 2025 React Native UI Kit. All rights reserved.</p>
+                            </div>
 
                         </div>
                     </section>

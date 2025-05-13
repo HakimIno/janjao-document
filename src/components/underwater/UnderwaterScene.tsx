@@ -67,18 +67,8 @@ export const UnderwaterScene: React.FC = () => {
       ))}
 
       {/* ลดจำนวนฟองอากาศลง */}
-      <Bubbles count={isMobile ? 5 : 10} />
+      <Bubbles count={isMobile ? 10 : 20} />
 
-      {/* ปลาดาว */}
-      {Array.from({ length: 3 }).map((_, i) => (
-        <Fish 
-          key={`starfish-${i}`}
-          type={FishType.STARFISH} 
-          position={{ bottom: `${5 + i * 10}%`, left: `${20 + i * 25}%` }} 
-          color="rgba(251, 146, 60, 0.3)"
-          size={{ width: 40, height: 40 }}
-        />
-      ))}
 
       {/* แมงกะพรุน */}
       {Array.from({ length: 2 }).map((_, i) => (

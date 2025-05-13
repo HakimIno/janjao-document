@@ -13,13 +13,13 @@ const Logo: React.FC<JanJaoLogoProps> = ({ size = 'md', className = '' }) => {
   };
 
   return (
-    <div className={`relative inline-flex items-center justify-center ${className}`}>
+    <div className={`relative inline-flex items-center justify-center ${className} w-full`}>
       {/* ข้อความหลัก */}
       <span
         className={`
           ${sizeStyles[size]} font-logo 
           tracking-wide relative z-10 bg-clip-text
-           text-transparent bg-gradient-to-r from-cyan-500 via-blue-500 to-teal-500
+           text-transparent bg-gradient-to-r from-cyan-500 via-cyan-500 to-teal-500
            
         `}
       >

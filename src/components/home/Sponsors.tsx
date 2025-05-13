@@ -1,86 +1,66 @@
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import './sponsors.css'; // CSS file for optimized animations
 import { sponsors } from './spon';
 
 const Sponsors = () => {
-  const infiniteSponsors = [...sponsors, ...sponsors, ...sponsors, ...sponsors, ...sponsors, ...sponsors];
+  // Memoize the sponsors instead of creating a new array on every render
+  const infiniteSponsors = useMemo(() => 
+    [...sponsors, ...sponsors, ...sponsors].slice(0, 18), 
+    []
+  );
   
   const marqueeRef = useRef<HTMLDivElement>(null);
-  const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [centerItems, setCenterItems] = useState<number[]>([]);
   
-  const updateCenterItems = () => {
-    if (!marqueeRef.current || itemsRef.current.length === 0) return;
+  // Debounced update function with throttle to reduce calculations
+  const updateCenterItems = useCallback(() => {
+    if (!marqueeRef.current) return;
     
     const containerRect = marqueeRef.current.getBoundingClientRect();
     const containerCenter = containerRect.left + containerRect.width / 2;
+    const maxDistance = containerRect.width / 2;
     
-    itemsRef.current.forEach((item) => {
-      if (!item) return;
-      
+    // Get all items at once to prevent multiple DOM queries
+    const items = Array.from(marqueeRef.current.querySelectorAll('.sponsor-item'));
+    const newCenterItems: number[] = [];
+    
+    items.forEach((item, index) => {
       const itemRect = item.getBoundingClientRect();
       const itemCenter = itemRect.left + itemRect.width / 2;
       const distanceFromCenter = Math.abs(containerCenter - itemCenter);
       
-      // Clear previous center-focus and center-shimmer classes
-      item.classList.remove('center-focus', 'center-shimmer');
-      
-      // Calculate opacity based on distance from center
-      const maxDistance = containerRect.width / 2;
+      // Calculate opacity and scale based on distance from center
       const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
-      
-      // Apply center focus and shimmer effect
-      if (normalizedDistance < 0.3) {
-        item.classList.add('center-focus');
-        
-        // Add shimmer effect to center items
-        if (normalizedDistance < 0.15) {
-          item.classList.add('center-shimmer');
-          
-          // Find and activate shimmer effect element
-          const shimmerElement = item.querySelector('.shimmer-effect');
-          if (shimmerElement) {
-            shimmerElement.classList.add('active');
-          }
-          
-          // Add glow animation to the glow element
-          const glowElement = item.querySelector('.sponsor-glow');
-          if (glowElement) {
-            glowElement.classList.add('active');
-          }
-        }
-      } else {
-        // Remove active classes from elements when not in center
-        const shimmerElement = item.querySelector('.shimmer-effect');
-        if (shimmerElement) {
-          shimmerElement.classList.remove('active');
-        }
-        
-        const glowElement = item.querySelector('.sponsor-glow');
-        if (glowElement) {
-          glowElement.classList.remove('active');
-        }
-      }
-      
-      // Adjust opacity and scale based on distance from center
       const opacity = 1 - (normalizedDistance * 0.7);
       const scale = 1 - (normalizedDistance * 0.3);
       
-      item.style.opacity = Math.max(0.3, opacity).toString();
-      item.style.transform = `scale(${Math.max(0.8, scale)})`;
+      // Type assertion to HTMLElement to use style property
+      (item as HTMLElement).style.opacity = Math.max(0.3, opacity).toString();
+      (item as HTMLElement).style.transform = `scale(${Math.max(0.8, scale)})`;
+      
+      // Store indices of center items to avoid class manipulations
+      if (normalizedDistance < 0.3) {
+        newCenterItems.push(index);
+        if (normalizedDistance < 0.15) {
+          newCenterItems.push(-index); // Negative to mark super-center items
+        }
+      }
     });
-  };
+    
+    setCenterItems(newCenterItems);
+  }, []);
   
-  // Generate bubbles with CSS only
-  const renderBubbles = () => {
-    const bubbles = [];
-    for (let i = 0; i < 30; i++) {
+  // Memoize static elements to prevent recreation on each render
+  const bubbles = useMemo(() => {
+    const elements = [];
+    for (let i = 0; i < 15; i++) { // Reduced from 30 to 15 for better performance
       const size = 2 + Math.random() * 10;
       const positionLeft = Math.random() * 100;
       const delay = Math.random() * 8;
       const duration = 3 + Math.random() * 10;
       
-      bubbles.push(
+      elements.push(
         <div 
           key={i}
           className="bubble absolute rounded-full z-0"
@@ -95,20 +75,19 @@ const Sponsors = () => {
         />
       );
     }
-    return bubbles;
-  };
+    return elements;
+  }, []);
   
-  // Generate underwater light rays
-  const renderLightRays = () => {
-    const rays = [];
-    
+  // Memoize rays to prevent recreation on each render
+  const lightRays = useMemo(() => {
+    const elements = [];
     for (let i = 0; i < 3; i++) {
       const width = 30 + Math.random() * 40;
       const leftPos = 10 + Math.random() * 70;
       const opacity = 0.03 + Math.random() * 0.07;
       const rotation = -15 + Math.random() * 30;
       
-      rays.push(
+      elements.push(
         <div 
           key={i}
           className="absolute bg-sky-300/5"
@@ -126,32 +105,38 @@ const Sponsors = () => {
         />
       );
     }
-    
-    return rays;
-  };
+    return elements;
+  }, []);
   
-  // Add scroll event listener for center highlighting
+  // Optimized event listeners with throttling
   useEffect(() => {
+    let rafId: number | null = null;
+    let isScrolling = false;
+    
+    const handleScroll = () => {
+      if (!isScrolling) {
+        isScrolling = true;
+        rafId = window.requestAnimationFrame(() => {
+          updateCenterItems();
+          isScrolling = false;
+        });
+      }
+    };
+    
     // Initial update
     updateCenterItems();
     
-    // Setup animation frame for smooth updates
-    let animationFrameId: number;
-    const scrollCallback = () => {
-      animationFrameId = window.requestAnimationFrame(updateCenterItems);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
-    window.addEventListener('scroll', scrollCallback);
-    
-    // Periodic updates for animation
-    const intervalId = setInterval(updateCenterItems, 60);
+    // Use a throttled interval for updates instead of frequent intervals
+    const intervalId = setInterval(updateCenterItems, 200); // Reduced from 60ms to 200ms
     
     return () => {
-      window.removeEventListener('scroll', scrollCallback);
-      window.cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) window.cancelAnimationFrame(rafId);
       clearInterval(intervalId);
     };
-  }, []);
+  }, [updateCenterItems]);
 
   return (
     <div className="relative mb-32 overflow-hidden">
@@ -187,12 +172,12 @@ const Sponsors = () => {
           {/* Water surface refraction effect */}
           <div className="water-surface absolute left-0 right-0 top-0 h-12 opacity-20"></div>
           
-          {/* Underwater light rays */}
-          {renderLightRays()}
+          {/* Underwater light rays - memoized */}
+          {lightRays}
           
-          {/* CSS-only shimmer effects */}
+          {/* CSS-only shimmer effects - reduced amount */}
           <div className="shimmer-container">
-            {Array.from({ length: 12 }).map((_, i) => (
+            {Array.from({ length: 6 }).map((_, i) => (
               <div 
                 key={i}
                 className="shimmer-line"
@@ -206,53 +191,54 @@ const Sponsors = () => {
             ))}
           </div>
           
-          {/* CSS-only bubbles */}
+          {/* CSS-only bubbles - memoized */}
           <div className="bubbles-container">
-            {renderBubbles()}
+            {bubbles}
           </div>
           
           {/* CSS-only light beam effect */}
           <div className="light-beam"></div>
 
-
           {/* Optimized infinite smooth scrolling marquee */}
           <div className="marquee-container relative z-10" ref={marqueeRef}>
             <div className="marquee-track">
-              {infiniteSponsors.map((sponsor, index) => (
-                <div
-                  key={index}
-                  ref={el => itemsRef.current[index] = el}
-                  className="sponsor-item"
-                >
-                  {/* Modern frosted glass effect with shimmering glow */}
-                  <div className="sponsor-glow"></div>
-                  
-                  {/* Logo */}
-                  <div className="logo-container">
-                    {sponsor.svg}
-                  </div>
+              {infiniteSponsors.map((sponsor, index) => {
+                const isCenterFocus = centerItems.includes(index);
+                const isCenterShimmer = centerItems.includes(-index);
+                
+                return (
+                  <div
+                    key={index}
+                    className={`sponsor-item ${isCenterFocus ? 'center-focus' : ''} ${isCenterShimmer ? 'center-shimmer' : ''}`}
+                  >
+                    {/* Conditionally render effects for better performance */}
+                    {isCenterShimmer && <div className="sponsor-glow active"></div>}
+                    {!isCenterShimmer && <div className="sponsor-glow"></div>}
+                    
+                    {/* Logo */}
+                    <div className="logo-container">
+                      {sponsor.svg}
+                    </div>
 
-                  {/* Optimized shimmer effect */}
-                  <div className="shimmer-effect"></div>
-                </div>
-              ))}
+                    {/* Only add active shimmer to center items */}
+                    {isCenterShimmer ? (
+                      <div className="shimmer-effect active"></div>
+                    ) : (
+                      <div className="shimmer-effect"></div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
           
-          {/* Underwater plants subtle effect */}
+          {/* Underwater plants - simplified */}
           <div className="absolute bottom-0 left-0 w-full h-16 z-1 opacity-40">
             <div className="absolute left-[10%] bottom-0 w-16 h-24 bg-teal-400/10" 
               style={{ 
                 clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
                 filter: 'blur(5px)',
                 animation: 'sway 8s ease-in-out infinite alternate' 
-              }}
-            ></div>
-            <div className="absolute left-[30%] bottom-0 w-8 h-20 bg-sky-400/10" 
-              style={{ 
-                clipPath: 'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)',
-                filter: 'blur(5px)',
-                animation: 'sway 7s ease-in-out infinite alternate-reverse' 
               }}
             ></div>
             <div className="absolute right-[15%] bottom-0 w-12 h-16 bg-cyan-400/10" 
