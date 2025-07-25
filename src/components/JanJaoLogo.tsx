@@ -14,17 +14,19 @@ const Logo: React.FC<JanJaoLogoProps> = ({ size = 'md', className = '' }) => {
 
   return (
     <div className={`relative inline-flex items-center justify-center ${className} w-full`}>
+      
       {/* ข้อความหลัก */}
       <span
         className={`
-          ${sizeStyles[size]} font-logo 
-          tracking-wide relative z-10 bg-clip-text
-           text-transparent bg-gradient-to-r from-cyan-500 via-cyan-500 to-teal-500
-           
+          ${sizeStyles[size]} 
+          tracking-wide relative z-10 bg-clip-text font-bold
+           text-transparent bg-gradient-to-r from-cyan-50 via-cyan-50 to-teal-50
+           font-logo
         `}
       >
-        JanJao UI
+        J
       </span>
+      <div className="w-9 h-9 bg-gradient-to-br from-cyan-500 via-blue-800 to-blue-500 rounded-xl flex justify-center items-center text-3xl font-logo">UI</div>
 
       
       {/* ลูกเล่น: เส้นโค้งเหมือนคลื่นน้ำ */}
